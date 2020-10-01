@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathsFormula", "MathsFormula\MathsFormula.csproj", "{ECB61152-7D46-4D6B-B296-1E4269E2A49E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MathsFormula", "MathsFormula\MathsFormula.csproj", "{ECB61152-7D46-4D6B-B296-1E4269E2A49E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SideThing", "SideThing\SideThing.csproj", "{2D00037A-966F-4A22-A095-5A63931BAF43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trigonometry", "Trigonometry\Trigonometry.csproj", "{D2F08CB2-9A51-4237-91DB-2387DB48ED5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{ECB61152-7D46-4D6B-B296-1E4269E2A49E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECB61152-7D46-4D6B-B296-1E4269E2A49E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECB61152-7D46-4D6B-B296-1E4269E2A49E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D00037A-966F-4A22-A095-5A63931BAF43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D00037A-966F-4A22-A095-5A63931BAF43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D00037A-966F-4A22-A095-5A63931BAF43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D00037A-966F-4A22-A095-5A63931BAF43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2F08CB2-9A51-4237-91DB-2387DB48ED5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2F08CB2-9A51-4237-91DB-2387DB48ED5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2F08CB2-9A51-4237-91DB-2387DB48ED5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2F08CB2-9A51-4237-91DB-2387DB48ED5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

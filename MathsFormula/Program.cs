@@ -52,11 +52,17 @@ namespace MathsFormula
 
         static float D(Plane P, Vector3 X)
         {
-            return ((P.a * X.x) + (P.b * X.y) + (P.c * X.z) + P.d) / MathF.Sqrt((P.a * P.a) + (P.b * P.b) + (P.c * P.c));
+            float toReturn = (P.a * X.x) + (P.b * X.y) + (P.c * X.z) + P.d;
+            toReturn /= MathF.Sqrt((P.a * P.a) + (P.b * P.b) + (P.c * P.c));
+            return toReturn;
         }
         static float B(float t, float P0, float P1, float P2, float P3)
         {
-            return (MathF.Pow(1 - t, 3) * P0) + (3 * MathF.Pow(1 - t, 2) * t * P1) + (3 * (1 - t) * t * t * P2) + (t * t * t * P3);
+            float toReturn = MathF.Pow(1 - t, 3) * P0;
+            toReturn += 3 * MathF.Pow(1 - t, 2) * t * P1;
+            toReturn += 3 * (1 - t) * t * t * P2;
+            toReturn += t * t * t * P3;
+            return toReturn;
         }
     }
 
@@ -97,86 +103,6 @@ namespace MathsFormula
             this.b = b;
             this.c = c;
             this.d = d;
-        }
-    }
-}
-
-namespace FunSideThing
-{
-    class Program
-    {
-        static void main()
-        {
-            int x = 3;
-            Console.WriteLine("Start " + x);
-            Add(ref x, 4);
-            Console.WriteLine("After Add " + x);
-            Multiply(ref x, 3);
-            Console.WriteLine("After Multiply " + x);
-            Exponent(ref x, 2);
-            Console.WriteLine("After Exponent " + x);
-            Root(ref x, 2);
-            Console.WriteLine("After Root " + x);
-            Divide(ref x, 3);
-            Console.WriteLine("After Divide " + x);
-            Subtract(ref x, 4);
-            Console.WriteLine("After Subtract " + x);
-        }
-
-
-        public static void Add(ref int amount, int amountToAdd)
-        {
-            for (int x = 0; x < amountToAdd; x++)
-            {
-                amount++;
-            }
-        }
-        public static void Multiply(ref int amount, int amountToMultiplyBy)
-        {
-            int tmp = amount;
-            for (int x = 1; x < amountToMultiplyBy; x++)
-            {
-                Add(ref amount, tmp);
-            }
-        }
-        public static void Exponent(ref int amount, int amountToExponentBy)
-        {
-            int tmp = amount;
-            for (int x = 1; x < amountToExponentBy; x++)
-            {
-                Multiply(ref amount, tmp);
-            }
-        }
-
-        public static void Subtract(ref int amount, int amountToSubtract)
-        {
-            for (int x = 0; x < amountToSubtract; x++)
-            {
-                amount--;
-            }
-        }
-        public static void Divide(ref int amount, int amountToDivideBy)
-        {
-            int tmp = amount;
-
-            for (int x = 1; tmp > 0; x++)
-            {
-                Subtract(ref tmp, amountToDivideBy);
-                amount = x;
-            }
-        }
-        public static void Root(ref int amount, int amountToRootBy)
-        {
-            int tmpInt = 0;
-            int tmpAmount = amount;
-
-            Exponent(ref tmpInt, amountToRootBy);
-            for (int x = 1; tmpInt != tmpAmount; x++)
-            {
-                tmpInt = x;
-                Exponent(ref tmpInt, amountToRootBy);
-                amount = x;
-            }
         }
     }
 }
