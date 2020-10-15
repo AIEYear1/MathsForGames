@@ -11,7 +11,9 @@ namespace MatrixHierarchies
         SpriteObject turretSprite = new SpriteObject();
         SceneObject turretObject = new SceneObject();
 
-        float speed = 100;
+        readonly float speed = 250, rotationSpeed = 90 * (MathF.PI / 180), turretRotSpeed = 120 * (MathF.PI / 180);
+        readonly float movementTick = 5, rotationTick = 2 * (MathF.PI / 180);
+        float curSpeed = 0, curRot = 0, curTurretRot = 0;
 
         public Tank()
         {
@@ -31,37 +33,112 @@ namespace MatrixHierarchies
 
         public override void OnUpdate(float deltaTime)
         {
-            if (IsKeyDown(KeyboardKey.KEY_A))
-            {
-                Rotate(-deltaTime);
-            }
-            if (IsKeyDown(KeyboardKey.KEY_D))
-            {
-                Rotate(deltaTime);
-            }
-            if (IsKeyDown(KeyboardKey.KEY_W))
-            {
-                Vector3 facing = new Vector3(LocalTransform.m1, LocalTransform.m2, 1) * deltaTime * speed;
-                Translate(facing.x, facing.y);
-            }
-            if (IsKeyDown(KeyboardKey.KEY_S))
-            {
-                Vector3 facing = new Vector3(LocalTransform.m1, LocalTransform.m2, 1) * deltaTime * -speed;
-                Translate(facing.x, facing.y);
-            }
-            if (IsKeyDown(KeyboardKey.KEY_Q))
-            {
-                turretObject.Rotate(-deltaTime);
-            }
-            if (IsKeyDown(KeyboardKey.KEY_E))
-            {
-                turretObject.Rotate(deltaTime);
-            }
-            //Vector3 face = new Vector3(LocalTransform.m1, LocalTransform.m2, 1) * deltaTime * speed;
-            //Translate(face.x, face.y);
+            RotateBody(deltaTime);
+
+            MoveBody(deltaTime);
+
+            RotateTurret(deltaTime);
+
             Game.CurCenter.x = globalTransform.m7;
             Game.CurCenter.y = globalTransform.m8;
             base.OnUpdate(deltaTime);
+        }
+
+        void MoveBody(float deltaTime)
+        {
+            if (IsKeyDown(KeyboardKey.KEY_W))
+            {
+                curSpeed = MathF.Min(curSpeed + movementTick, speed);
+            }
+            else if (IsKeyDown(KeyboardKey.KEY_S))
+            {
+                curSpeed = MathF.Max(curSpeed - movementTick, -speed);
+            }
+            else
+            {
+                if(MathF.Abs(curSpeed) < movementTick)
+                {
+                    curSpeed = 0;
+                }
+                else if(curSpeed < 0)
+                {
+                    curSpeed += movementTick;
+                }
+                else if(curSpeed > 0)
+                {
+                    curSpeed -= movementTick;
+                }
+            }
+
+            if(curSpeed != 0)
+            {
+                Vector3 facing = new Vector3(LocalTransform.m1, LocalTransform.m2, 1);
+                facing *= deltaTime * curSpeed;
+                Translate(facing.x, facing.y);
+            }
+        }
+        void RotateBody(float deltaTime)
+        {
+            if (IsKeyDown(KeyboardKey.KEY_A))
+            {
+                curRot = MathF.Max(curRot - rotationTick, -rotationSpeed);
+            }
+            else if (IsKeyDown(KeyboardKey.KEY_D))
+            {
+                curRot = MathF.Min(curRot + rotationTick, rotationSpeed);
+            }
+            else
+            {
+                if(MathF.Abs(curRot) < rotationTick)
+                {
+                    curRot = 0;
+                }
+                else if (curRot < 0)
+                {
+                    curRot += rotationTick;
+                }
+                else if (curRot > 0)
+                {
+                    curRot -= rotationTick;
+                }
+            }
+
+            if (curRot != 0)
+            {
+                Rotate(curRot * deltaTime);
+            }
+        }
+
+        void RotateTurret(float deltaTime)
+        {
+            if (IsKeyDown(KeyboardKey.KEY_Q))
+            {
+                curTurretRot = MathF.Max(curTurretRot - rotationTick, -turretRotSpeed);
+            }
+            else if (IsKeyDown(KeyboardKey.KEY_E))
+            {
+                curTurretRot = MathF.Min(curTurretRot + rotationTick, turretRotSpeed);
+            }
+            else
+            {
+                if (MathF.Abs(curTurretRot) < rotationTick)
+                {
+                    curTurretRot = 0;
+                }
+                else if (curTurretRot < 0)
+                {
+                    curTurretRot += rotationTick;
+                }
+                else if (curTurretRot > 0)
+                {
+                    curTurretRot -= rotationTick;
+                }
+            }
+
+            if(curTurretRot != 0)
+            {
+                turretObject.Rotate(curTurretRot * deltaTime);
+            }
         }
     }
 }
