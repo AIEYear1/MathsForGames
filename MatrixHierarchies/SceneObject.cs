@@ -51,7 +51,11 @@ namespace MatrixHierarchies
 
         public virtual void OnUpdate(float deltaTime)
         {
+            if (parent != null)
+                return;
 
+            Vector2 tmpVector = Program.Center - Game.CurCenter;
+            Translate(tmpVector.x, tmpVector.y);
         }
 
         public virtual void OnDraw()

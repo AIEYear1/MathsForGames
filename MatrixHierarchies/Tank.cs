@@ -11,6 +11,8 @@ namespace MatrixHierarchies
         SpriteObject turretSprite = new SpriteObject();
         SceneObject turretObject = new SceneObject();
 
+        float speed = 100;
+
         public Tank()
         {
             tankSprite.Load("tankBlue_outline.png");
@@ -24,7 +26,7 @@ namespace MatrixHierarchies
             AddChild(tankSprite);
             AddChild(turretObject);
 
-            SetPosition(GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f);
+            SetPosition(Program.Center.x, Program.Center.y);
         }
 
         public override void OnUpdate(float deltaTime)
@@ -39,12 +41,12 @@ namespace MatrixHierarchies
             }
             if (IsKeyDown(KeyboardKey.KEY_W))
             {
-                Vector3 facing = new Vector3(LocalTransform.m1, LocalTransform.m2, 1) * deltaTime * 100;
+                Vector3 facing = new Vector3(LocalTransform.m1, LocalTransform.m2, 1) * deltaTime * speed;
                 Translate(facing.x, facing.y);
             }
             if (IsKeyDown(KeyboardKey.KEY_S))
             {
-                Vector3 facing = new Vector3(LocalTransform.m1, LocalTransform.m2, 1) * deltaTime * -100;
+                Vector3 facing = new Vector3(LocalTransform.m1, LocalTransform.m2, 1) * deltaTime * -speed;
                 Translate(facing.x, facing.y);
             }
             if (IsKeyDown(KeyboardKey.KEY_Q))
@@ -55,6 +57,11 @@ namespace MatrixHierarchies
             {
                 turretObject.Rotate(deltaTime);
             }
+            //Vector3 face = new Vector3(LocalTransform.m1, LocalTransform.m2, 1) * deltaTime * speed;
+            //Translate(face.x, face.y);
+            Game.CurCenter.x = globalTransform.m7;
+            Game.CurCenter.y = globalTransform.m8;
+            base.OnUpdate(deltaTime);
         }
     }
 }

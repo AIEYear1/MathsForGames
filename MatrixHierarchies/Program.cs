@@ -4,6 +4,7 @@ namespace MatrixHierarchies
 {
     class Program
     {
+        public static readonly Vector2 Center = new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2);
         static void Main()
         {
             Game game = new Game();

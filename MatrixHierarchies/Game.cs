@@ -6,7 +6,9 @@ namespace MatrixHierarchies
 {
     class Game
     {
+        public static Vector2 CurCenter = Program.Center;
         Tank tank;
+        SpriteObject barrel = new SpriteObject();
 
         Stopwatch stopwatch = new Stopwatch();
 
@@ -27,6 +29,8 @@ namespace MatrixHierarchies
         void GenerateObjects()
         {
             tank = new Tank();
+            barrel.Load("barrelGreen_up.png");
+            barrel.SetPosition(Program.Center.x + 160, Program.Center.y - 150);
         }
 
         public void ShutDown()
@@ -48,7 +52,8 @@ namespace MatrixHierarchies
             frames++;
 
             tank.Update(deltaTime);
-
+            barrel.Update(deltaTime);
+            CurCenter = Program.Center;
             lastTime = currentTime;
         }
         public void Draw()
@@ -59,6 +64,7 @@ namespace MatrixHierarchies
             DrawText(fps.ToString(), 10, 10, 12, RED);
 
             tank.Draw();
+            barrel.Draw();
 
             EndDrawing();
         }

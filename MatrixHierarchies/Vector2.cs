@@ -2,7 +2,7 @@
 
 namespace MatrixHierarchies
 {
-    class Vector2
+    struct Vector2
     {
         public float x;
         public float y;
@@ -12,11 +12,11 @@ namespace MatrixHierarchies
             this.x = x;
             this.y = y;
         }
-        public Vector2()
-        {
-            x = 0;
-            y = 0;
-        }
+        //public Vector2()
+        //{
+        //    x = 0;
+        //    y = 0;
+        //}
 
         public float Magnitude()
         {
