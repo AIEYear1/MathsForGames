@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vectors", "Vectors\Vectors.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binary", "Binary\Binary.csproj", "{F37C3841-F6F1-46F8-82C0-73B5F8A5457B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matrices", "Matrices\Matrices.csproj", "{9480E7F5-09C7-4A81-9352-D760946EA321}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matrices", "Matrices\Matrices.csproj", "{9480E7F5-09C7-4A81-9352-D760946EA321}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixHierarchies", "MatrixHierarchies\MatrixHierarchies.csproj", "{E173BB72-1CD9-49CD-AEEF-AE29A291069F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{9480E7F5-09C7-4A81-9352-D760946EA321}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9480E7F5-09C7-4A81-9352-D760946EA321}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9480E7F5-09C7-4A81-9352-D760946EA321}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E173BB72-1CD9-49CD-AEEF-AE29A291069F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E173BB72-1CD9-49CD-AEEF-AE29A291069F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E173BB72-1CD9-49CD-AEEF-AE29A291069F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E173BB72-1CD9-49CD-AEEF-AE29A291069F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

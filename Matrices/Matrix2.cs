@@ -94,7 +94,7 @@ namespace Matrices
         }
         public static Vector2 operator *(Matrix2 lhs, Vector2 rhs)
         {
-            return new Vector2((lhs[0, 0] * rhs.X) + (lhs[1, 0] * rhs.Y), (lhs[0, 1] * rhs.X) + (lhs[1, 1] * rhs.Y));
+            return new Vector2((lhs[0, 0] * rhs.x) + (lhs[1, 0] * rhs.y), (lhs[0, 1] * rhs.x) + (lhs[1, 1] * rhs.y));
         }
         public static implicit operator Matrix2(float[] values)
         {

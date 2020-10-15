@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
 using System.Text;
 
-namespace Vectors
+namespace MatrixHierarchies
 {
     class Vector2
     {
@@ -92,6 +92,14 @@ namespace Vectors
         public static Vector2 operator /(float scalar, Vector2 vector)
         {
             return new Vector2(vector.x / scalar, vector.y / scalar);
+        }
+        public static implicit operator System.Numerics.Vector2(Vector2 vector)
+        {
+            return new System.Numerics.Vector2(vector.x, vector.y);
+        }
+        public static implicit operator Vector2(System.Numerics.Vector2 vector)
+        {
+            return new Vector2(vector.X, vector.Y);
         }
     }
 }

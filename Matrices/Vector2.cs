@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vectors
+namespace Matrices
 {
     class Vector2
     {

@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace Matrices
 {
@@ -124,19 +125,129 @@ namespace Matrices
             matrix[1][0] = tmpFloat;
         }
 
+        public void SetRotateX(float rot)
+        {
+            //1, 0,         0
+            //0, cos(rot),  sin(rot)
+            //0, -sin(rot), cos(rot)
+            this = new float[]
+            {
+                1, 0,               0,
+                0, MathF.Cos(rot),  MathF.Sin(rot),
+                0, -MathF.Sin(rot), MathF.Cos(rot)
+            };
+        }
+        public void SetRotateY(float rot)
+        {
+            //cos(rot), 0, -sin(rot)
+            //0,        1, 0
+            //sin(rot), 0, cos(rot)
+            this = new float[]
+            {
+                MathF.Cos(rot), 0, -MathF.Sin(rot),
+                0,              1, 0,
+                MathF.Sin(rot), 0, MathF.Cos(rot)
+            };
+        }
+        public void SetRotateZ(float rot)
+        {
+            //cos(rot),  sin(rot), 0
+            //-sin(rot), cos(rot), 0
+            //0,         0,        1
+            this = new float[]
+            {
+                MathF.Cos(rot),  MathF.Sin(rot), 0,
+                -MathF.Sin(rot), MathF.Cos(rot), 0,
+                0,               0,              1
+            };
+        }
+
+        public void RotateX(float rot)
+        {
+            //1, 0,         0
+            //0, cos(rot),  sin(rot)
+            //0, -sin(rot), cos(rot)
+            this *= new float[]
+            {
+                1, 0,               0,
+                0, MathF.Cos(rot),  MathF.Sin(rot),
+                0, -MathF.Sin(rot), MathF.Cos(rot)
+            };
+        }
+        public void RotateY(float rot)
+        {
+            //cos(rot), 0, -sin(rot)
+            //0,        1, 0
+            //sin(rot), 0, cos(rot)
+            this *= new float[]
+            {
+                MathF.Cos(rot), 0, -MathF.Sin(rot),
+                0,              1, 0,
+                MathF.Sin(rot), 0, MathF.Cos(rot)
+            };
+        }
+        public void RotateZ(float rot)
+        {
+            //cos(rot),  sin(rot), 0
+            //-sin(rot), cos(rot), 0
+            //0,         0,        1
+            this *= new float[]
+            {
+                MathF.Cos(rot),  MathF.Sin(rot), 0,
+                -MathF.Sin(rot), MathF.Cos(rot), 0,
+                0,               0,              1
+            };
+        }
+
+        public void Rotate(float pitch, float yaw, float roll)
+        {
+            pitch *= (MathF.PI / 180);
+            yaw *= (MathF.PI / 180);
+            roll *= (MathF.PI / 180);
+
+            this = Matrix3.Identity;
+
+            RotateX(pitch);
+            RotateY(yaw);
+            RotateZ(roll);
+        }
+
+        public void SetScale(float x, float y, float z)
+        {
+            this = new float[]
+            {
+                x, 0, 0,
+                0, y, 0,
+                0, 0, z
+            };
+        }
+        public void Scale(float x, float y, float z)
+        {
+            this *= new float[]
+            {
+                x, 0, 0,
+                0, y, 0,
+                0, 0, z
+            };
+        }
+
         public static Matrix3 operator *(Matrix3 lhs, Matrix3 rhs)
         {
-            return new Matrix3((lhs[0, 0] * rhs[0, 0]) + (lhs[0, 1] * rhs[1, 0]) + (lhs[0, 2] * rhs[2, 0]), (lhs[0, 0] * rhs[0, 1]) + (lhs[0, 1] * rhs[1, 1]) + (lhs[0, 2] * rhs[2, 1]),
-                               (lhs[0, 0] * rhs[0, 2]) + (lhs[0, 1] * rhs[1, 2]) + (lhs[0, 2] * rhs[2, 2]), (lhs[1, 0] * rhs[0, 0]) + (lhs[1, 1] * rhs[1, 0]) + (lhs[1, 2] * rhs[2, 0]),
-                               (lhs[1, 0] * rhs[0, 1]) + (lhs[1, 1] * rhs[1, 1]) + (lhs[1, 2] * rhs[2, 1]), (lhs[1, 0] * rhs[0, 2]) + (lhs[1, 1] * rhs[1, 2]) + (lhs[1, 2] * rhs[2, 2]),
-                               (lhs[2, 0] * rhs[0, 0]) + (lhs[2, 1] * rhs[1, 0]) + (lhs[2, 2] * rhs[2, 0]), (lhs[2, 0] * rhs[0, 1]) + (lhs[2, 1] * rhs[1, 1]) + (lhs[2, 2] * rhs[2, 1]),
+            return new Matrix3((lhs[0, 0] * rhs[0, 0]) + (lhs[0, 1] * rhs[1, 0]) + (lhs[0, 2] * rhs[2, 0]), 
+                               (lhs[0, 0] * rhs[0, 1]) + (lhs[0, 1] * rhs[1, 1]) + (lhs[0, 2] * rhs[2, 1]),
+                               (lhs[0, 0] * rhs[0, 2]) + (lhs[0, 1] * rhs[1, 2]) + (lhs[0, 2] * rhs[2, 2]), 
+                               (lhs[1, 0] * rhs[0, 0]) + (lhs[1, 1] * rhs[1, 0]) + (lhs[1, 2] * rhs[2, 0]),
+                               (lhs[1, 0] * rhs[0, 1]) + (lhs[1, 1] * rhs[1, 1]) + (lhs[1, 2] * rhs[2, 1]), 
+                               (lhs[1, 0] * rhs[0, 2]) + (lhs[1, 1] * rhs[1, 2]) + (lhs[1, 2] * rhs[2, 2]),
+                               (lhs[2, 0] * rhs[0, 0]) + (lhs[2, 1] * rhs[1, 0]) + (lhs[2, 2] * rhs[2, 0]), 
+                               (lhs[2, 0] * rhs[0, 1]) + (lhs[2, 1] * rhs[1, 1]) + (lhs[2, 2] * rhs[2, 1]),
                                (lhs[2, 0] * rhs[0, 2]) + (lhs[2, 1] * rhs[1, 2]) + (lhs[2, 2] * rhs[2, 2]));
         }
         public static Vector3 operator *(Matrix3 lhs, Vector3 rhs)
         {
-            return new Vector3((lhs[0, 0] * rhs.X) + (lhs[0, 1] * rhs.Y) + (lhs[0, 2] * rhs.Z),
-                               (lhs[1, 0] * rhs.X) + (lhs[1, 1] * rhs.Y) + (lhs[1, 2] * rhs.Z),
-                               (lhs[2, 0] * rhs.X) + (lhs[2, 1] * rhs.Y) + (lhs[2, 2] * rhs.Z));
+            return new Vector3((lhs[0, 0] * rhs.x) + (lhs[0, 1] * rhs.y) + (lhs[0, 2] * rhs.z),
+                               (lhs[1, 0] * rhs.x) + (lhs[1, 1] * rhs.y) + (lhs[1, 2] * rhs.z),
+                               (lhs[2, 0] * rhs.x) + (lhs[2, 1] * rhs.y) + (lhs[2, 2] * rhs.z));
         }
 
         public static Matrix3 operator +(Matrix3 lhs, Matrix3 rhs)

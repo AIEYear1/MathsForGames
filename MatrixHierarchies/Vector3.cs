@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Text;
 
-namespace Matrices
+namespace MatrixHierarchies
 {
     public class Vector3
     {
@@ -24,7 +26,7 @@ namespace Matrices
 
         public float Magnitude()
         {
-            return MathF.Sqrt((x * x) + (y * y) + (z * z));
+            return (float)Math.Sqrt((x * x) + (y * y) + (z * z));
         }
         public float MagnitudeSqr()
         {
@@ -37,7 +39,7 @@ namespace Matrices
             float distX = point.x - x;
             float distY = point.y - y;
             float distZ = point.z - z;
-            return MathF.Sqrt((distX * distX) + (distY * distY) + (distZ * distZ));
+            return (float)Math.Sqrt((distX * distX) + (distY * distY) + (distZ * distZ));
         }
         public float DistanceSqr(Vector3 point)
         {
@@ -45,7 +47,7 @@ namespace Matrices
             return dist * dist;
         }
 
-        public void Normalised()
+        public void Normalize()
         {
             float multiplier = 1 / Magnitude();
             x *= multiplier;
@@ -57,9 +59,13 @@ namespace Matrices
         {
             return (x * vector.x) + (y * vector.y) + (z * vector.z);
         }
+        public static float Dot(Vector3 vector1, Vector3 vector2)
+        {
+            return (vector2.x * vector1.x) + (vector2.y * vector1.y) + (vector2.z * vector1.z);
+        }
         public Vector3 Cross(Vector3 vector)
         {
-            return new Vector3((y * vector.z) - (z * vector.y), (z * vector.x) - (x * vector.z), (x * vector.y) - (y - vector.x));
+            return new Vector3((y * vector.z) - (z * vector.y), (z * vector.x) - (x * vector.z), (x * vector.y) - (y * vector.x));
         }
 
         /// <summary>
@@ -67,8 +73,8 @@ namespace Matrices
         /// </summary>
         public float AngleBetween(Vector3 vector)
         {
-            float toReturn = MathF.Acos(Dot(vector) / (Magnitude() * vector.Magnitude()));
-            return toReturn * (180 / MathF.PI);
+            float toReturn = (float)Math.Acos(Dot(vector) / (Magnitude() * vector.Magnitude()));
+            return toReturn * (float)(180 / Math.PI);
         }
 
         public static Vector3 operator +(Vector3 lhs, Vector3 rhs)
@@ -95,9 +101,9 @@ namespace Matrices
         {
             return new Vector3(vector.x / scalar, vector.y / scalar, vector.z / scalar);
         }
-        public override string ToString()
+        public static implicit operator Vector3(float[] values)
         {
-            return $"{x}, {y}, {z}";
+            return new Vector3(values[0], values[1], values[2]);
         }
     }
 }
