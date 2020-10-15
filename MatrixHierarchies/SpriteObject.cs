@@ -1,7 +1,5 @@
 ﻿using Raylib_cs;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
@@ -9,7 +7,6 @@ namespace MatrixHierarchies
     class SpriteObject : SceneObject
     {
         Texture2D texture = new Texture2D();
-        Image image = new Image();
 
         public float Width
         {

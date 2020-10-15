@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 
 namespace MatrixHierarchies
 {
     class SceneObject
     {
-        protected SceneObject parent = null; 
+        protected SceneObject parent = null;
         protected List<SceneObject> children = new List<SceneObject>();
 
-        protected Matrix3 localTransform = new Matrix3(); 
+        protected Matrix3 localTransform = new Matrix3();
         protected Matrix3 globalTransform = new Matrix3();
 
         public SceneObject Parent
@@ -27,8 +24,8 @@ namespace MatrixHierarchies
             get => globalTransform;
         }
 
-        public SceneObject() 
-        { 
+        public SceneObject()
+        {
 
         }
 
@@ -69,40 +66,40 @@ namespace MatrixHierarchies
             else
                 globalTransform = localTransform;
 
-            for (int x = 0; x < children.Count; x++) 
+            for (int x = 0; x < children.Count; x++)
             {
                 children[x].UpdateTransform();
             }
         }
-        public void SetPosition(float x, float y) 
-        { 
-            localTransform.SetTranslation(x, y); 
-            UpdateTransform(); 
+        public void SetPosition(float x, float y)
+        {
+            localTransform.SetTranslation(x, y);
+            UpdateTransform();
         }
-        public void SetRotate(float radians) 
-        { 
-            localTransform.SetRotateZ(radians); 
-            UpdateTransform(); 
+        public void SetRotate(float radians)
+        {
+            localTransform.SetRotateZ(radians);
+            UpdateTransform();
         }
-        public void SetScale(float width, float height) 
-        { 
-            localTransform.SetScale(width, height, 1); 
-            UpdateTransform(); 
+        public void SetScale(float width, float height)
+        {
+            localTransform.SetScale(width, height, 1);
+            UpdateTransform();
         }
-        public void Translate(float x, float y) 
-        { 
-            localTransform.Translate(x, y); 
-            UpdateTransform(); 
+        public void Translate(float x, float y)
+        {
+            localTransform.Translate(x, y);
+            UpdateTransform();
         }
-        public void Rotate(float radians) 
-        { 
-            localTransform.RotateZ(radians); 
-            UpdateTransform(); 
+        public void Rotate(float radians)
+        {
+            localTransform.RotateZ(radians);
+            UpdateTransform();
         }
-        public void Scale(float width, float height) 
-        { 
-            localTransform.Scale(width, height, 1); 
-            UpdateTransform(); 
+        public void Scale(float width, float height)
+        {
+            localTransform.Scale(width, height, 1);
+            UpdateTransform();
         }
 
         public int GetChildCount()
@@ -133,12 +130,12 @@ namespace MatrixHierarchies
 
         ~SceneObject()
         {
-            if(parent != null)
+            if (parent != null)
             {
                 parent.RemoveChild(this);
             }
 
-            foreach(SceneObject so in children)
+            foreach (SceneObject so in children)
             {
                 so.parent = null;
             }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MatrixHierarchies
 {
@@ -96,50 +92,35 @@ namespace MatrixHierarchies
             this.matrix = matrix;
         }
 
-        public Matrix3(float c1r1, float c1r2, float c1r3, float c2r1, float c2r2, float c2r3, float c3r1, float c3r2, float c3r3)
+        public Matrix3(float c1r1, float c1r2, float c1r3,
+                       float c2r1, float c2r2, float c2r3,
+                       float c3r1, float c3r2, float c3r3)
         {
             matrix = new float[][]
             {
                 new float[]
                 {
-                    c1r1,
-                    c1r2,
-                    c1r3
+                    c1r1, c1r2, c1r3
                 },
                 new float[]
                 {
-                    c2r1,
-                    c2r2,
-                    c2r3
+                    c2r1, c2r2, c2r3
                 },
                 new float[]
                 {
-                    c3r1,
-                    c3r2,
-                    c3r3
+                    c3r1, c3r2, c3r3
                 }
             };
         }
         public Matrix3()
         {
-            matrix = new float[][]
-            {
-                new float[3],
-                new float[3],
-                new float[3]
-            };
+            matrix = Identity.matrix;
         }
 
-        public void Transpose()
+        public void SetTranslation(float x, float y)
         {
-            float tmpFloat = matrix[0][1];
-            matrix[0][1] = matrix[1][0];
-            matrix[1][0] = tmpFloat;
-        }
-        public void SetTranslation(float x, float y) 
-        { 
-            m7 = x; 
-            m8 = y; 
+            m7 = x;
+            m8 = y;
             m9 = 1;
         }
         public void Translate(float x, float y)
@@ -181,7 +162,7 @@ namespace MatrixHierarchies
             //0,         0,        1
             Matrix3 tmp = new float[]
             {
-                (float)Math.Cos(rot), (float)Math.Sin(rot), 0,
+                (float)Math.Cos(rot), (float)Math.Sin(rot),  0,
                 -(float)Math.Sin(rot), (float)Math.Cos(rot), 0,
                 0,                      0,                   1
             };
@@ -233,9 +214,9 @@ namespace MatrixHierarchies
 
             matrix = Matrix3.Identity.matrix;
 
-            RotateX(pitch);
-            RotateY(yaw);
             RotateZ(roll);
+            RotateY(yaw);
+            RotateX(pitch);
         }
 
         public void SetScale(float x, float y, float z)
@@ -282,7 +263,7 @@ namespace MatrixHierarchies
             float G = Vector3.Dot(lhs.Row3, rhs.Column1);
             float H = Vector3.Dot(lhs.Row3, rhs.Column2);
             float I = Vector3.Dot(lhs.Row3, rhs.Column3);
-            return new Matrix3(A, D, G, 
+            return new Matrix3(A, D, G,
                                B, E, H,
                                C, F, I);
         }

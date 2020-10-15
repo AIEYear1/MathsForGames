@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Raylib_cs;
-using static Raylib_cs.Raylib;
+﻿using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Game game = new Game();
 
@@ -16,7 +13,7 @@ namespace MatrixHierarchies
 
             game.Init();
 
-            while(!WindowShouldClose())
+            while (!WindowShouldClose())
             {
                 game.Update();
                 game.Draw();
