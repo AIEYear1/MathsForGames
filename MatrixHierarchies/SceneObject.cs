@@ -24,6 +24,12 @@ namespace MatrixHierarchies
             get => globalTransform;
         }
 
+        public Vector2 Position
+        {
+            get => new Vector2(globalTransform.m7, globalTransform.m8);
+            set => SetPosition(value.x, value.y);
+        }
+
         public SceneObject()
         {
 

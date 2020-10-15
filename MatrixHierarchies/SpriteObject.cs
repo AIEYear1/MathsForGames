@@ -32,7 +32,10 @@ namespace MatrixHierarchies
         {
             float rotation = MathF.Atan2(globalTransform.m2, globalTransform.m1);
 
-            DrawTextureEx(texture, new Vector2(globalTransform.m7, globalTransform.m8), rotation * (180.0f / MathF.PI), 1, Color.WHITE);
+            if (CheckCollisionRecs(Program.ScreenSpace, new Rectangle(Position.x, Position.y, Width, Height)))
+            {
+                DrawTextureEx(texture, Position, rotation * (180.0f / MathF.PI), 1, Color.WHITE);
+            }
         }
     }
 }

@@ -39,8 +39,8 @@ namespace MatrixHierarchies
 
             RotateTurret(deltaTime);
 
-            Game.CurCenter.x = globalTransform.m7;
-            Game.CurCenter.y = globalTransform.m8;
+            Game.CurCenter.x = Position.x;
+            Game.CurCenter.y = Position.y;
             base.OnUpdate(deltaTime);
         }
 
@@ -56,21 +56,21 @@ namespace MatrixHierarchies
             }
             else
             {
-                if(MathF.Abs(curSpeed) < movementTick)
+                if (MathF.Abs(curSpeed) < movementTick)
                 {
                     curSpeed = 0;
                 }
-                else if(curSpeed < 0)
+                else if (curSpeed < 0)
                 {
                     curSpeed += movementTick;
                 }
-                else if(curSpeed > 0)
+                else if (curSpeed > 0)
                 {
                     curSpeed -= movementTick;
                 }
             }
 
-            if(curSpeed != 0)
+            if (curSpeed != 0)
             {
                 Vector3 facing = new Vector3(LocalTransform.m1, LocalTransform.m2, 1);
                 facing *= deltaTime * curSpeed;
@@ -89,7 +89,7 @@ namespace MatrixHierarchies
             }
             else
             {
-                if(MathF.Abs(curRot) < rotationTick)
+                if (MathF.Abs(curRot) < rotationTick)
                 {
                     curRot = 0;
                 }
@@ -135,7 +135,7 @@ namespace MatrixHierarchies
                 }
             }
 
-            if(curTurretRot != 0)
+            if (curTurretRot != 0)
             {
                 turretObject.Rotate(curTurretRot * deltaTime);
             }
