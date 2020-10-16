@@ -2,7 +2,7 @@
 
 namespace MatrixHierarchies
 {
-    public class Vector3
+    public struct Vector3
     {
         public float x;
         public float y;
@@ -14,12 +14,12 @@ namespace MatrixHierarchies
             this.y = y;
             this.z = z;
         }
-        public Vector3()
-        {
-            x = 0;
-            y = 0;
-            z = 0;
-        }
+        //public Vector3()
+        //{
+        //    x = 0;
+        //    y = 0;
+        //    z = 0;
+        //}
 
         public float Magnitude()
         {
@@ -101,6 +101,10 @@ namespace MatrixHierarchies
         public static implicit operator Vector3(float[] values)
         {
             return new Vector3(values[0], values[1], values[2]);
+        }
+        public static implicit operator Vector3(Vector2 vector)
+        {
+            return new Vector3(vector.x, vector.y, 0);
         }
     }
 }

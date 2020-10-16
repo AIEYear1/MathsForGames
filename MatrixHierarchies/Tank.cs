@@ -6,6 +6,8 @@ namespace MatrixHierarchies
 {
     class Tank : SceneObject
     {
+        public BoxCollider collider;
+
         SpriteObject tankSprite = new SpriteObject();
 
         SpriteObject turretSprite = new SpriteObject();
@@ -29,6 +31,7 @@ namespace MatrixHierarchies
             AddChild(turretObject);
 
             SetPosition(position.x, position.y);
+            collider = new BoxCollider(position, tankSprite.Width, tankSprite.Height, rotation);
         }
 
         public override void OnUpdate(float deltaTime)
@@ -105,6 +108,7 @@ namespace MatrixHierarchies
             if (curRot != 0)
             {
                 Rotate(curRot * deltaTime);
+                collider.Rotate(curRot * deltaTime);
             }
         }
 

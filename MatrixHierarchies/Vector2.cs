@@ -1,11 +1,29 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MatrixHierarchies
 {
-    struct Vector2
+    public struct Vector2
     {
         public float x;
         public float y;
+
+        public static Vector2 Up
+        {
+            get => new Vector2(0, 1);
+        }
+        public static Vector2 Right
+        {
+            get => new Vector2(1, 0);
+        }
+        public static Vector2 One
+        {
+            get => new Vector2(1, 1);
+        }
+        public static Vector2 Zero
+        {
+            get => new Vector2();
+        }
 
         public Vector2(float x, float y)
         {
@@ -52,12 +70,19 @@ namespace MatrixHierarchies
         }
 
         /// <summary>
-        /// finds the angle between to Vectors
+        /// finds the angle between two Vectors
         /// </summary>
         public float AngleBetween(Vector2 vector)
         {
             float toReturn = MathF.Acos(Dot(vector) / (Magnitude() * vector.Magnitude()));
             return toReturn * (180 / MathF.PI);
+        }
+
+        public static Vector2 Clamp(Vector2 point, Vector2 minPoint, Vector2 maxPoint)
+        {
+            point.x = (point.x > maxPoint.x) ? maxPoint.x : (point.x < minPoint.x) ? minPoint.x : point.x;
+            point.y = (point.y > maxPoint.y) ? maxPoint.y : (point.y < minPoint.y) ? minPoint.y : point.y;
+            return point;
         }
 
         public static Vector2 operator +(Vector2 lhs, Vector2 rhs)
@@ -91,6 +116,10 @@ namespace MatrixHierarchies
         public static implicit operator Vector2(System.Numerics.Vector2 vector)
         {
             return new Vector2(vector.X, vector.Y);
+        }
+        public static explicit operator Vector2(Vector3 vector)
+        {
+            return new Vector2(vector.x, vector.y);
         }
     }
 }
