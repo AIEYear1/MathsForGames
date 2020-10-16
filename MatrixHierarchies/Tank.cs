@@ -15,20 +15,20 @@ namespace MatrixHierarchies
         readonly float movementTick = 5, rotationTick = 2 * (MathF.PI / 180);
         float curSpeed = 0, curRot = 0, curTurretRot = 0;
 
-        public Tank()
+        public Tank(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position)
         {
-            tankSprite.Load("tankBlue_outline.png");
-            tankSprite.SetRotate(-90 * (float)(Math.PI / 180.0f));
+            tankSprite.Load(tankSpriteFileName);
+            tankSprite.SetRotate(rotation);
             tankSprite.SetPosition(-tankSprite.Width / 2.0f, tankSprite.Height / 2.0f);
-            turretSprite.Load("barrelBlue.png");
-            turretSprite.SetRotate(-90 * (float)(Math.PI / 180.0f));
+            turretSprite.Load(turretSpriteFileName);
+            turretSprite.SetRotate(rotation);
             turretSprite.SetPosition(0, turretSprite.Width / 2.0f);
 
             turretObject.AddChild(turretSprite);
             AddChild(tankSprite);
             AddChild(turretObject);
 
-            SetPosition(Program.Center.x, Program.Center.y);
+            SetPosition(position.x, position.y);
         }
 
         public override void OnUpdate(float deltaTime)
@@ -39,8 +39,7 @@ namespace MatrixHierarchies
 
             RotateTurret(deltaTime);
 
-            Game.CurCenter.x = Position.x;
-            Game.CurCenter.y = Position.y;
+            Game.CurCenter = Position;
             base.OnUpdate(deltaTime);
         }
 

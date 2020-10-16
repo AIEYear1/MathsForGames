@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using static Raylib_cs.Color;
 using static Raylib_cs.Raylib;
 
@@ -28,7 +29,7 @@ namespace MatrixHierarchies
         }
         void GenerateObjects()
         {
-            tank = new Tank();
+            tank = new Tank("tankBlue_outline.png", "barrelBlue.png", -90 * (float)(MathF.PI / 180.0f), Program.Center);
             barrel.Load("barrelGreen_up.png");
             barrel.SetPosition(Program.Center.x + 160, Program.Center.y - 150);
         }

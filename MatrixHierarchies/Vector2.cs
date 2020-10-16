@@ -12,11 +12,6 @@ namespace MatrixHierarchies
             this.x = x;
             this.y = y;
         }
-        //public Vector2()
-        //{
-        //    x = 0;
-        //    y = 0;
-        //}
 
         public float Magnitude()
         {
