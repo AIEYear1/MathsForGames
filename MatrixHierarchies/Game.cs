@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using Raylib_cs;
 using static Raylib_cs.Color;
 using static Raylib_cs.Raylib;
 
@@ -11,6 +10,10 @@ namespace MatrixHierarchies
         public static Vector2 CurCenter = Program.Center;
         Tank tank;
         DebugButtonCircle button;
+        DebugButtonCircle button1;
+        DebugButton button2;
+        DebugButton button3;
+        DebugButton button4;
         SpriteObject barrel = new SpriteObject();
 
         Stopwatch stopwatch = new Stopwatch();
@@ -35,6 +38,10 @@ namespace MatrixHierarchies
             barrel.Load("barrelGreen_up.png");
             barrel.SetPosition(Program.Center.x + 160, Program.Center.y - 150);
             button = new DebugButtonCircle(Vector2.Zero, 300, tank);
+            button1 = new DebugButtonCircle(Vector2.Right * Program.ScreenSpace.width, 20, tank);
+            button2 = new DebugButton(new Raylib_cs.Rectangle(0, Program.ScreenSpace.height, 40, 40), tank);
+            button3 = new DebugButton(new Raylib_cs.Rectangle(Program.ScreenSpace.width, Program.ScreenSpace.height, 300, 300), tank);
+            button4 = new DebugButton(new Raylib_cs.Rectangle(Program.ScreenSpace.width, Program.Center.y, 300, 40), tank);
         }
 
         public void ShutDown()
@@ -58,6 +65,10 @@ namespace MatrixHierarchies
             tank.Update(deltaTime);
             barrel.Update(deltaTime);
             button.Update(deltaTime);
+            button1.Update(deltaTime);
+            button2.Update(deltaTime);
+            button3.Update(deltaTime);
+            button4.Update(deltaTime);
             CurCenter = Program.Center;
             lastTime = currentTime;
         }
@@ -69,8 +80,12 @@ namespace MatrixHierarchies
             DrawText(fps.ToString(), 10, 10, 12, RED);
 
             button.Draw();
+            button3.Draw();
+            button4.Draw();
             tank.Draw();
             barrel.Draw();
+            button1.Draw();
+            button2.Draw();
 
             EndDrawing();
         }

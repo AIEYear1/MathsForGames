@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Raylib_cs;
+using System;
 using System.Linq;
-using Raylib_cs;
-using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
 {
@@ -25,7 +24,7 @@ namespace MatrixHierarchies
 
         public static bool BoxCollision(BoxCollider lhs, BoxCollider rhs)
         {
-            if (lhs.position.Distance(rhs.position) > 
+            if (lhs.position.Distance(rhs.position) >
                (lhs.TopRightPoint - lhs.position).Magnitude() + (rhs.TopRightPoint - rhs.position).Magnitude())
             {
                 return false;
@@ -83,7 +82,7 @@ namespace MatrixHierarchies
             float recWidth = lhs.TopLeftPoint.Distance(lhs.TopRightPoint);
             float recHeight = lhs.TopLeftPoint.Distance(lhs.BottomLeftPoint);
             // Make UnRotated Rectangle in the same spot as the rotated rectangle
-            Rectangle rec = new Rectangle(lhs.position.x - (recWidth / 2), lhs.position.y - (recHeight / 2), 
+            Rectangle rec = new Rectangle(lhs.position.x - (recWidth / 2), lhs.position.y - (recHeight / 2),
                                           recWidth, recHeight);
 
             // Calculate the amount of rotation in the rectangle in degrees using the top left corner of the rectangle
@@ -108,7 +107,7 @@ namespace MatrixHierarchies
 
 
             // Check collision
-            Vector2 closestCirclePos = Vector2.Clamp(circlePos, new Vector2(rec.x, rec.y), 
+            Vector2 closestCirclePos = Vector2.Clamp(circlePos, new Vector2(rec.x, rec.y),
                                                      new Vector2(rec.x + rec.width, rec.y + rec.height));
 
             return (circlePos.Distance(closestCirclePos) <= rhs.Radius);

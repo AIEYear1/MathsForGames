@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Raylib_cs;
-using System;
+﻿using Raylib_cs;
 using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
@@ -29,7 +27,7 @@ namespace MatrixHierarchies
             get => bottomRightPoint;
         }
 
-        public BoxCollider(Vector2 position, float width, float height, float rotation) : base (position)
+        public BoxCollider(Vector2 position, float width, float height, float rotation) : base(position)
         {
             width /= 2;
             height /= 2;
@@ -50,7 +48,7 @@ namespace MatrixHierarchies
             bottomRightPoint.x += width;
             bottomRightPoint.y -= height;
 
-            if(rotation != 0)
+            if (rotation != 0)
             {
                 Rotate(rotation);
             }

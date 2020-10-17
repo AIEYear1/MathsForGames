@@ -16,7 +16,7 @@ namespace MatrixHierarchies
         {
             SetPosition(rec.x, rec.y);
             rectangle = rec;
-            collider = new BoxCollider(new Vector2(rec.x + (rec.width / 2), rec.y + (rec.height / 2)), 
+            collider = new BoxCollider(new Vector2(rec.x + (rec.width / 2), rec.y + (rec.height / 2)),
                                        rec.width, rec.height, 0);
 
             ObjectColliding = tank;

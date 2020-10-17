@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MatrixHierarchies
+﻿namespace MatrixHierarchies
 {
     class CircleCollider : Collider
     {
@@ -17,7 +13,7 @@ namespace MatrixHierarchies
         {
             get => radius;
         }
-        
+
 
         public CircleCollider(Vector2 position, float radius) : base(position)
         {
