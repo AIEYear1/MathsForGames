@@ -52,11 +52,17 @@ namespace MatrixHierarchies
             return dist * dist;
         }
 
-        public void Normalised()
+        public void Normalize()
         {
             float multiplier = 1 / Magnitude();
             x *= multiplier;
             y *= multiplier;
+        }
+        public Vector2 Normalised()
+        {
+            Vector2 toReturn = this;
+            toReturn.Normalize();
+            return toReturn;
         }
 
         public float Dot(Vector2 vector)

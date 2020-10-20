@@ -1,11 +1,13 @@
 ﻿using Raylib_cs;
 using System;
+using System.Collections.Generic;
 using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
 {
     class Tank : SceneObject
     {
+        public List<Bullet> bullets = new List<Bullet>();
         public BoxCollider collider;
 
         SpriteObject tankSprite = new SpriteObject();
@@ -13,9 +15,10 @@ namespace MatrixHierarchies
         SpriteObject turretSprite = new SpriteObject();
         SceneObject turretObject = new SceneObject();
 
-        readonly float speed = 250, rotationSpeed = 90 * (MathF.PI / 180), turretRotSpeed = 120 * (MathF.PI / 180);
-        readonly float movementTick = 5, rotationTick = 2 * (MathF.PI / 180);
+        readonly float speed = 250, rotationSpeed = 90 * (MathF.PI / 180), turretRotSpeed = 30 * (MathF.PI / 180);
+        //readonly float movementTick = 5, rotationTick = 2 * (MathF.PI / 180);
         float curSpeed = 0, curRot = 0, curTurretRot = 0;
+        Timer attackDelay = new Timer(1.5f);
 
         public Tank(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position)
         {
@@ -32,6 +35,8 @@ namespace MatrixHierarchies
 
             SetPosition(position.x, position.y);
             collider = new BoxCollider(position, tankSprite.Width, tankSprite.Height, rotation);
+
+            attackDelay.Reset(attackDelay.delay);
         }
 
         public override void OnUpdate(float deltaTime)
@@ -41,37 +46,38 @@ namespace MatrixHierarchies
             MoveBody(deltaTime);
 
             RotateTurret(deltaTime);
-
             Game.CurCenter = Position;
+
+            DrawText((IsKeyPressed(KeyboardKey.KEY_SPACE) & attackDelay.Check(false)).ToString(), 5, (int)(Program.ScreenSpace.height - 20), 20, Color.MAROON);
+
+            if (IsKeyPressed(KeyboardKey.KEY_SPACE) & attackDelay.Check(false))
+            {
+                float rotation = MathF.Atan2(turretObject.GlobalTransform.m2, turretObject.GlobalTransform.m1);
+                rotation = (rotation < 0) ? rotation + (2 * MathF.PI) : rotation;
+                Vector2 bulletPos = Position + (new Vector2(turretObject.GlobalTransform.m1, turretObject.GlobalTransform.m2).Normalised() * turretSprite.Height);
+                bullets.Add(new Bullet("bulletBlue_outline.png", 600, bulletPos, rotation, this));
+                attackDelay.Reset();
+            }
+
+            for (int x = 0; x < bullets.Count; x++)
+            {
+                bullets[x].Update(deltaTime);
+            }
+
             base.OnUpdate(deltaTime);
+        }
+
+        public override void OnDraw()
+        {
+            for (int x = 0; x < bullets.Count; x++)
+            {
+                bullets[x].Draw();
+            }
         }
 
         void MoveBody(float deltaTime)
         {
-            if (IsKeyDown(KeyboardKey.KEY_W))
-            {
-                curSpeed = MathF.Min(curSpeed + movementTick, speed);
-            }
-            else if (IsKeyDown(KeyboardKey.KEY_S))
-            {
-                curSpeed = MathF.Max(curSpeed - movementTick, -speed);
-            }
-            else
-            {
-                if (MathF.Abs(curSpeed) < movementTick)
-                {
-                    curSpeed = 0;
-                }
-                else if (curSpeed < 0)
-                {
-                    curSpeed += movementTick;
-                }
-                else if (curSpeed > 0)
-                {
-                    curSpeed -= movementTick;
-                }
-            }
-
+            curSpeed = speed * Utils.GetAxis("Vertical", 5);
             if (curSpeed != 0)
             {
                 Vector3 facing = new Vector3(LocalTransform.m1, LocalTransform.m2, 1);
@@ -81,29 +87,7 @@ namespace MatrixHierarchies
         }
         void RotateBody(float deltaTime)
         {
-            if (IsKeyDown(KeyboardKey.KEY_A))
-            {
-                curRot = MathF.Max(curRot - rotationTick, -rotationSpeed);
-            }
-            else if (IsKeyDown(KeyboardKey.KEY_D))
-            {
-                curRot = MathF.Min(curRot + rotationTick, rotationSpeed);
-            }
-            else
-            {
-                if (MathF.Abs(curRot) < rotationTick)
-                {
-                    curRot = 0;
-                }
-                else if (curRot < 0)
-                {
-                    curRot += rotationTick;
-                }
-                else if (curRot > 0)
-                {
-                    curRot -= rotationTick;
-                }
-            }
+            curRot = rotationSpeed * Utils.GetAxis("Horizontal", 3);
 
             if (curRot != 0)
             {
@@ -114,29 +98,7 @@ namespace MatrixHierarchies
 
         void RotateTurret(float deltaTime)
         {
-            if (IsKeyDown(KeyboardKey.KEY_Q))
-            {
-                curTurretRot = MathF.Max(curTurretRot - rotationTick, -turretRotSpeed);
-            }
-            else if (IsKeyDown(KeyboardKey.KEY_E))
-            {
-                curTurretRot = MathF.Min(curTurretRot + rotationTick, turretRotSpeed);
-            }
-            else
-            {
-                if (MathF.Abs(curTurretRot) < rotationTick)
-                {
-                    curTurretRot = 0;
-                }
-                else if (curTurretRot < 0)
-                {
-                    curTurretRot += rotationTick;
-                }
-                else if (curTurretRot > 0)
-                {
-                    curTurretRot -= rotationTick;
-                }
-            }
+            curTurretRot = turretRotSpeed * Utils.GetAxis("Turret", 9f);
 
             if (curTurretRot != 0)
             {
