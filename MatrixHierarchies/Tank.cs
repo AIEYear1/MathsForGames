@@ -10,6 +10,9 @@ namespace MatrixHierarchies
         public List<Bullet> bullets = new List<Bullet>();
         public BoxCollider collider;
 
+        public Timer ammoCount = new Timer(20);
+        public Timer attackDelay = new Timer(1.5f);
+
         SpriteObject tankSprite = new SpriteObject();
 
         SpriteObject turretSprite = new SpriteObject();
@@ -18,7 +21,6 @@ namespace MatrixHierarchies
         readonly float speed = 250, rotationSpeed = 90 * (MathF.PI / 180), turretRotSpeed = 30 * (MathF.PI / 180);
         //readonly float movementTick = 5, rotationTick = 2 * (MathF.PI / 180);
         float curSpeed = 0, curRot = 0, curTurretRot = 0;
-        Timer attackDelay = new Timer(1.5f);
 
         public Tank(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position)
         {
@@ -48,14 +50,15 @@ namespace MatrixHierarchies
             RotateTurret(deltaTime);
             Game.CurCenter = Position;
 
-            DrawText((IsKeyPressed(KeyboardKey.KEY_SPACE) & attackDelay.Check(false)).ToString(), 5, (int)(Program.ScreenSpace.height - 20), 20, Color.MAROON);
+            //DrawText((IsKeyPressed(KeyboardKey.KEY_SPACE) & attackDelay.Check(false)).ToString(), 5, (int)(Program.ScreenSpace.height - 20), 20, Color.MAROON);
 
-            if (IsKeyPressed(KeyboardKey.KEY_SPACE) & attackDelay.Check(false))
+            if (IsKeyPressed(KeyboardKey.KEY_SPACE) & attackDelay.Check(false) && !ammoCount.IsComplete(false))
             {
                 float rotation = MathF.Atan2(turretObject.GlobalTransform.m2, turretObject.GlobalTransform.m1);
                 rotation = (rotation < 0) ? rotation + (2 * MathF.PI) : rotation;
                 Vector2 bulletPos = Position + (new Vector2(turretObject.GlobalTransform.m1, turretObject.GlobalTransform.m2).Normalised() * turretSprite.Height);
                 bullets.Add(new Bullet("bulletBlue_outline.png", 600, bulletPos, rotation, this));
+                ammoCount.CountByValue(1);
                 attackDelay.Reset();
             }
 
