@@ -5,15 +5,16 @@ namespace MatrixHierarchies
     class Bullet : SceneObject
     {
         Tank source;
+
         BoxCollider collider;
         SpriteObject bulletSprite = new SpriteObject();
         float speed = 0;
-        bool destroyed = false;
         Timer lifeTime = new Timer(1);
 
         public Bullet(string bulletSpriteFileName, float speed, Vector2 position, float rotation, Tank tank)
         {
             source = tank;
+
             bulletSprite.Load(bulletSpriteFileName);
             this.speed = speed;
 
@@ -29,9 +30,6 @@ namespace MatrixHierarchies
 
         public override void OnUpdate(float deltaTime)
         {
-            if (destroyed)
-                return;
-
             if (lifeTime.Check())
             {
                 Destroy();
@@ -56,8 +54,6 @@ namespace MatrixHierarchies
         public void Destroy()
         {
             source.bullets.Remove(this);
-            children.Remove(bulletSprite);
-            destroyed = true;
         }
     }
 }

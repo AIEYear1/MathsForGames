@@ -4,11 +4,6 @@
     {
         float radius = 0;
 
-        public override Vector2 Position
-        {
-            get => position;
-        }
-
         public float Radius
         {
             get => radius;

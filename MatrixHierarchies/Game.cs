@@ -8,8 +8,11 @@ namespace MatrixHierarchies
     class Game
     {
         public static Vector2 CurCenter = Program.Center;
+
         Tank player;
         SpriteObject barrel = new SpriteObject();
+
+        AI testEnemy;
 
         Stopwatch stopwatch = new Stopwatch();
 
@@ -33,6 +36,9 @@ namespace MatrixHierarchies
             player = new Tank("tankBlue_outline.png", "barrelBlue.png", -90 * (float)(MathF.PI / 180.0f), Program.Center);
             barrel.Load("barrelGreen_up.png");
             barrel.SetPosition(Program.Center.x + 160, Program.Center.y - 150);
+            AmmoManager.Initialize(player);
+
+            testEnemy = new AI("tankRed_outline.png", "barrelRed.png", -90 * (float)(MathF.PI / 180.0f), -Program.Center, 1000, 300, player);
         }
 
         public void ShutDown()
@@ -54,7 +60,11 @@ namespace MatrixHierarchies
             frames++;
 
             player.Update(deltaTime);
+
+            testEnemy.Update(deltaTime);
+
             barrel.Update(deltaTime);
+            AmmoManager.Update(deltaTime);
 
             CurCenter = Program.Center;
             lastTime = currentTime;
@@ -65,6 +75,10 @@ namespace MatrixHierarchies
 
             ClearBackground(WHITE);
             DrawText(fps.ToString(), 10, 10, 12, RED);
+
+            AmmoManager.Draw();
+
+            testEnemy.Draw();
 
             player.Draw();
             barrel.Draw();

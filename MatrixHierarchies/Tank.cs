@@ -13,14 +13,13 @@ namespace MatrixHierarchies
         public Timer ammoCount = new Timer(20);
         public Timer attackDelay = new Timer(1.5f);
 
-        SpriteObject tankSprite = new SpriteObject();
+        protected SpriteObject tankSprite = new SpriteObject();
 
-        SpriteObject turretSprite = new SpriteObject();
-        SceneObject turretObject = new SceneObject();
+        protected SpriteObject turretSprite = new SpriteObject();
+        protected SceneObject turretObject = new SceneObject();
 
-        readonly float speed = 250, rotationSpeed = 90 * (MathF.PI / 180), turretRotSpeed = 30 * (MathF.PI / 180);
-        //readonly float movementTick = 5, rotationTick = 2 * (MathF.PI / 180);
-        float curSpeed = 0, curRot = 0, curTurretRot = 0;
+        protected readonly float speed = 250, rotationSpeed = 90 * (MathF.PI / 180), turretRotSpeed = 30 * (MathF.PI / 180);
+        protected float curSpeed = 0, curRot = 0, curTurretRot = 0;
 
         public Tank(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position)
         {
@@ -49,8 +48,6 @@ namespace MatrixHierarchies
 
             RotateTurret(deltaTime);
             Game.CurCenter = Position;
-
-            //DrawText((IsKeyPressed(KeyboardKey.KEY_SPACE) & attackDelay.Check(false)).ToString(), 5, (int)(Program.ScreenSpace.height - 20), 20, Color.MAROON);
 
             if (IsKeyPressed(KeyboardKey.KEY_SPACE) & attackDelay.Check(false) && !ammoCount.IsComplete(false))
             {

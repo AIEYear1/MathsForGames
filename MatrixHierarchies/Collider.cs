@@ -107,7 +107,7 @@ namespace MatrixHierarchies
 
 
             // Check collision
-            Vector2 closestCirclePos = Vector2.Clamp(circlePos, new Vector2(rec.x, rec.y),
+            Vector2 closestCirclePos = Vector2.ClampBox(circlePos, new Vector2(rec.x, rec.y),
                                                      new Vector2(rec.x + rec.width, rec.y + rec.height));
 
             return (circlePos.Distance(closestCirclePos) <= rhs.Radius);
@@ -149,7 +149,7 @@ namespace MatrixHierarchies
 
 
             // Check collision
-            Vector2 closestCirclePos = Vector2.Clamp(circlePos, new Vector2(rec.x, rec.y),
+            Vector2 closestCirclePos = Vector2.ClampBox(circlePos, new Vector2(rec.x, rec.y),
                                                      new Vector2(rec.x + rec.width, rec.y + rec.height));
 
             return (circlePos.Distance(closestCirclePos) <= lhs.Radius);

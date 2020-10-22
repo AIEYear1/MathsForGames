@@ -83,11 +83,26 @@ namespace MatrixHierarchies
             return toReturn * (180 / MathF.PI);
         }
 
-        public static Vector2 Clamp(Vector2 point, Vector2 minPoint, Vector2 maxPoint)
+        public static Vector2 ClampBox(Vector2 point, Vector2 minPoint, Vector2 maxPoint)
         {
             point.x = (point.x > maxPoint.x) ? maxPoint.x : (point.x < minPoint.x) ? minPoint.x : point.x;
             point.y = (point.y > maxPoint.y) ? maxPoint.y : (point.y < minPoint.y) ? minPoint.y : point.y;
             return point;
+        }
+        public static Vector2 ClampCircle(Vector2 pointToClamp, Vector2 centerOfCircle, float radius)
+        {
+            pointToClamp -= centerOfCircle;
+            return ClampMagnitude(pointToClamp, radius) + centerOfCircle;
+        }
+        public static Vector2 ClampMagnitude(Vector2 vector2, float magnitude)
+        {
+            if (vector2.Magnitude() <= magnitude || vector2 == Vector2.Zero)
+            {
+                return vector2;
+            }
+
+            float x = magnitude / vector2.Magnitude();
+            return vector2 * x;
         }
 
         public static Vector2 operator +(Vector2 lhs, Vector2 rhs)
@@ -114,6 +129,20 @@ namespace MatrixHierarchies
         {
             return new Vector2(vector.x / scalar, vector.y / scalar);
         }
+        public static Vector2 operator -(Vector2 vector)
+        {
+            return new Vector2(-vector.x, -vector.y);
+        }
+        public static bool operator ==(Vector2 lhs, Vector2 rhs)
+        {
+            lhs -= rhs;
+            return (lhs.x + rhs.x) == 0;
+        }
+        public static bool operator !=(Vector2 lhs, Vector2 rhs)
+        {
+            return !(lhs == rhs);
+        }
+
         public static implicit operator System.Numerics.Vector2(Vector2 vector)
         {
             return new System.Numerics.Vector2(vector.x, vector.y);
