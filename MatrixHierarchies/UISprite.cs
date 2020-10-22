@@ -34,7 +34,7 @@ namespace MatrixHierarchies
             this.color = color;
         }
 
-        public void Draw()
+        public virtual void Draw()
         {
             DrawRectangleRec(rectangle, color);
         }

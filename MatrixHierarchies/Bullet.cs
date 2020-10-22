@@ -52,9 +52,9 @@ namespace MatrixHierarchies
 
         public void CheckCollision(Tank tank)
         {
-            if(Collider.Collision(collider, tank.collider))
+            if (Collider.Collision(collider, tank.collider))
             {
-                //TODO: Tank take damage
+                tank.TakeDamage();
                 Destroy();
             }
         }

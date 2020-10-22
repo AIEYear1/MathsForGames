@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MatrixHierarchies
+﻿namespace MatrixHierarchies
 {
     class AmmoPickup : SceneObject
     {
@@ -33,7 +29,7 @@ namespace MatrixHierarchies
 
         public override void OnUpdate(float deltaTime)
         {
-            if(Collider.Collision(collider, player.collider))
+            if (Collider.Collision(collider, player.collider))
             {
                 player.ammoCount.Reset();
                 AmmoManager.DestroyAmmo(this);

@@ -8,6 +8,7 @@ namespace MatrixHierarchies
         public static Texture2D playerBulletTexture;
         public static Texture2D enemyBulletTexture;
 
+        public static Texture2D ammoPickupTexture;
         public static Texture2D ammoTexture;
 
         public static void Initialize()
@@ -15,6 +16,7 @@ namespace MatrixHierarchies
             playerBulletTexture = LoadTexture("bulletBlue_outline.png");
             enemyBulletTexture = LoadTexture("bulletBlue_outline.png");
 
+            ammoPickupTexture = LoadTexture("bulletBlue_outline.png");
             ammoTexture = LoadTexture("bulletBlueSilver_outline.png");
         }
     }

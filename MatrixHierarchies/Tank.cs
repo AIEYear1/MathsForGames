@@ -12,6 +12,8 @@ namespace MatrixHierarchies
         public Timer ammoCount = new Timer(20);
         public Timer attackDelay = new Timer(1.5f);
 
+        public Timer health;
+
         protected SpriteObject tankSprite = new SpriteObject();
 
         protected SpriteObject turretSprite = new SpriteObject();
@@ -20,7 +22,7 @@ namespace MatrixHierarchies
         protected readonly float speed = 250, rotationSpeed = 90 * (MathF.PI / 180), turretRotSpeed = 30 * (MathF.PI / 180);
         protected float curSpeed = 0, curRot = 0, curTurretRot = 0;
 
-        public Tank(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position)
+        public Tank(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position, float hp)
         {
             tankSprite.Load(tankSpriteFileName);
             tankSprite.SetRotate(rotation);
@@ -37,10 +39,17 @@ namespace MatrixHierarchies
             collider = new BoxCollider(position, tankSprite.Width, tankSprite.Height, rotation);
 
             attackDelay.Reset(attackDelay.delay);
+            health = new Timer(hp);
         }
 
         public override void OnUpdate(float deltaTime)
         {
+            if (health.IsComplete(false))
+            {
+                ///Death
+                return;
+            }
+
             RotateBody(deltaTime);
 
             MoveBody(deltaTime);
@@ -72,6 +81,12 @@ namespace MatrixHierarchies
             {
                 bullets[x].Draw();
             }
+        }
+
+        public virtual void TakeDamage()
+        {
+            health.CountByValue(1);
+            UI.playerHealth.SetHealth(health.TimeRemaining / health.delay);
         }
 
         void MoveBody(float deltaTime)

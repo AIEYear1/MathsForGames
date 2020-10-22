@@ -5,17 +5,18 @@ namespace MatrixHierarchies
 {
     class UI
     {
-        static Texture2D ammoSprite;
-
+        public static PlayerHealth playerHealth;
         public static void Initialize()
         {
-            Image img = LoadImage("bulletBlue_outline.png");
-            ammoSprite = LoadTextureFromImage(img);
+            playerHealth = new PlayerHealth(Vector2.Up * (Program.ScreenSpace.height - 25), 300, 40);
         }
 
         public static void Draw(Tank player)
         {
             DrawAmmo(player);
+            playerHealth.Draw();
+            DrawText("Enemies " + EnemyManager.currentNumberOfEnemies.ToString("00") + " : Wave " + EnemyManager.wave.ToString("00"), 
+                     (int)(Program.ScreenSpace.width / 2) - 190, 0, 30, Color.DARKGRAY);
         }
 
         static void DrawAmmo(Tank player)
@@ -25,7 +26,7 @@ namespace MatrixHierarchies
             for (int x = 0; x < player.ammoCount.TimeRemaining; x++)
             {
                 float heightOffset = 1 + (x * 0.5f);
-                DrawTextureEx(ammoSprite, new Vector2(Program.ScreenSpace.width, Program.ScreenSpace.height - (ammoSprite.width * heightOffset)), 90, 1, colorOpacity);
+                DrawTextureEx(PreLoadedTextures.ammoPickupTexture, new Vector2(Program.ScreenSpace.width, Program.ScreenSpace.height - (PreLoadedTextures.ammoPickupTexture.width * heightOffset)), 90, 1, colorOpacity);
             }
         }
     }

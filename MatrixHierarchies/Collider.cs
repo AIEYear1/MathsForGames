@@ -28,14 +28,14 @@ namespace MatrixHierarchies
 
         public static bool Collision(Collider lhs, Collider rhs)
         {
-            if(lhs is BoxCollider lBox)
+            if (lhs is BoxCollider lBox)
             {
                 if (rhs is BoxCollider rBox)
                     return BoxCollision(lBox, rBox);
                 if (rhs is CircleCollider rCirc)
                     return BoxCircleCollision(lBox, rCirc);
             }
-            if(lhs is CircleCollider lCirc)
+            if (lhs is CircleCollider lCirc)
             {
                 if (rhs is BoxCollider rBox)
                     return BoxCircleCollision(rBox, lCirc);

@@ -1,6 +1,4 @@
 ﻿using System;
-using static Raylib_cs.Raylib;
-using Raylib_cs;
 namespace MatrixHierarchies
 {
     class AI : Tank
@@ -15,7 +13,7 @@ namespace MatrixHierarchies
 
         new readonly float speed = 200, rotationSpeed = 60 * (MathF.PI / 180);
 
-        public AI(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position, int maxRange, int idealRange, Tank tank) : base(tankSpriteFileName, turretSpriteFileName, rotation, position)
+        public AI(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position, float hp, int maxRange, int idealRange, Tank tank) : base(tankSpriteFileName, turretSpriteFileName, rotation, position, hp)
         {
             player = tank;
 
@@ -27,6 +25,12 @@ namespace MatrixHierarchies
 
         public override void OnUpdate(float deltaTime)
         {
+            if (health.IsComplete(false))
+            {
+                ///Kill tank
+                return;
+            }
+
             Move(deltaTime);
 
             RotateTurret(deltaTime);
@@ -58,6 +62,18 @@ namespace MatrixHierarchies
 
             healthBar.SetPosition(Position.x, Position.y - distFromEnemyCenter);
             collider.SetPosition(Position);
+        }
+
+        public override void OnDraw()
+        {
+            healthBar.Draw();
+            base.OnDraw();
+        }
+
+        public override void TakeDamage()
+        {
+            health.CountByValue(1);
+            healthBar.SetHealth(health.TimeRemaining / health.delay);
         }
 
         void Move(float deltaTime)
@@ -123,11 +139,6 @@ namespace MatrixHierarchies
             {
                 turretObject.Rotate(turretRotSpeed * deltaTime * directionToRotate);
             }
-        }
-        public override void OnDraw()
-        {
-            healthBar.Draw();
-            base.OnDraw();
         }
     }
 }
