@@ -54,7 +54,7 @@ namespace MatrixHierarchies
             }
         }
 
-        public void SetPosition(Vector2 pos)
+        public override void SetPosition(Vector2 pos)
         {
             topLeftPoint -= Position;
             topLeftPoint += pos;
@@ -71,7 +71,7 @@ namespace MatrixHierarchies
             position = pos;
         }
 
-        public void Rotate(float radians)
+        public override void Rotate(float radians)
         {
             rotationMatrix.SetRotateZ(radians);
 
@@ -92,7 +92,7 @@ namespace MatrixHierarchies
             bottomRightPoint = tmpVector + position;
         }
 
-        public void Debug()
+        public override void Debug()
         {
             DrawCircleV(topLeftPoint, 10, Color.MAROON);
             DrawCircleV(topRightPoint, 10, Color.MAROON);
@@ -100,47 +100,17 @@ namespace MatrixHierarchies
             DrawCircleV(bottomRightPoint, 10, Color.MAROON);
         }
 
-        //public static bool BoxCollision(BoxCollider lhs, BoxCollider rhs)
-        //{
-        //    if ((lhs.topRightPoint - lhs.position).Magnitude() + 
-        //        (rhs.topRightPoint - rhs.position).Magnitude() < (lhs.position - rhs.position).Magnitude())
-        //    {
-        //        return false;
-        //    }
+        public static implicit operator BoxCollider(Rectangle rec)
+        {
+            return new BoxCollider(new Vector2(rec.x + (rec.width / 2), rec.y + (rec.height / 2)), rec.width, rec.height, 0);
+        }
+        public static explicit operator Rectangle(BoxCollider box)
+        {
+            // Calc box width and height
+            float recWidth = box.TopLeftPoint.Distance(box.TopRightPoint);
+            float recHeight = box.TopLeftPoint.Distance(box.BottomLeftPoint);
 
-        //    Vector2[] axes = new Vector2[]
-        //    {
-        //        lhs.topRightPoint - lhs.topLeftPoint,
-        //        lhs.topRightPoint - lhs.bottomRightPoint,
-        //        rhs.topLeftPoint - rhs.bottomLeftPoint,
-        //        rhs.topLeftPoint - rhs.topRightPoint,
-        //    };
-
-        //    for (int x = 0; x < 4; x++)
-        //    {
-        //        Vector2 axis = axes[x];
-        //        float[] lhsProjected = new float[]
-        //        {
-        //            ((lhs.topLeftPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
-        //            ((lhs.topRightPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
-        //            ((lhs.bottomLeftPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
-        //            ((lhs.bottomRightPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
-        //        };
-        //        float[] rhsProjected = new float[]
-        //        {
-        //            ((rhs.topLeftPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
-        //            ((rhs.topRightPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
-        //            ((rhs.bottomLeftPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
-        //            ((rhs.bottomRightPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
-        //        };
-
-        //        if (rhsProjected.Min() > lhsProjected.Max() || rhsProjected.Max() < lhsProjected.Min())
-        //        {
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-        //}
+            return new Rectangle(box.position.x - (recWidth / 2), box.position.y - (recHeight / 2), recWidth, recHeight);
+        }
     }
 }

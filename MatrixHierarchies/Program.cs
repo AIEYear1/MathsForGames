@@ -5,7 +5,7 @@ namespace MatrixHierarchies
 {
     class Program
     {
-        public static readonly Rectangle ScreenSpace = new Rectangle(0, 0, 640, 480);
+        public static readonly Rectangle ScreenSpace = new Rectangle(0, 0, 1000, 800);
         public static readonly Vector2 Center = new Vector2(ScreenSpace.width / 2, ScreenSpace.height / 2);
         static void Main()
         {

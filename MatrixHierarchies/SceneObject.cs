@@ -5,6 +5,8 @@ namespace MatrixHierarchies
 {
     class SceneObject
     {
+        public Collider collider;
+
         protected SceneObject parent = null;
         protected List<SceneObject> children = new List<SceneObject>();
 

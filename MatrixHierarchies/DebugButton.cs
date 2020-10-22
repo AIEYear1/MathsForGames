@@ -5,7 +5,6 @@ namespace MatrixHierarchies
 {
     class DebugButton : SceneObject
     {
-        BoxCollider collider;
         Color curColor = Color.WHITE;
         Color defaultColor = Color.RED;
         Color pressedColor = Color.GREEN;
@@ -24,7 +23,7 @@ namespace MatrixHierarchies
 
         public override void OnUpdate(float deltaTime)
         {
-            if (Collider.BoxCollision(collider, ObjectColliding.collider))
+            if (Collider.Collision(collider, ObjectColliding.collider))
             {
                 curColor = pressedColor;
             }

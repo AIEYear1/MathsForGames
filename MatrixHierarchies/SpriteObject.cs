@@ -26,13 +26,29 @@ namespace MatrixHierarchies
         {
             Image img = LoadImage(filename);
             texture = LoadTextureFromImage(img);
+
+            collider = new BoxCollider(Position + new Vector2(img.width / 2, img.height / 2), img.width, img.height, MathF.Atan2(globalTransform.m2, globalTransform.m1));
+        }
+        public void PreLoad(ref Texture2D _texture)
+        {
+            texture = _texture;
+            collider = new BoxCollider(Position + new Vector2(_texture.width / 2, _texture.height / 2), _texture.width, _texture.height, MathF.Atan2(globalTransform.m2, globalTransform.m1));
+        }
+
+        public override void OnUpdate(float deltaTime)
+        {
+            float rotation = MathF.Atan2(globalTransform.m2, globalTransform.m1);
+
+            collider.Rotate(rotation);
+
+            base.OnUpdate(deltaTime);
         }
 
         public override void OnDraw()
         {
             float rotation = MathF.Atan2(globalTransform.m2, globalTransform.m1);
 
-            if (CheckCollisionRecs(Program.ScreenSpace, new Rectangle(Position.x, Position.y, Width, Height)))
+            if (Collider.Collision(collider, (BoxCollider)Program.ScreenSpace))
             {
                 DrawTextureEx(texture, Position, rotation * (180.0f / MathF.PI), 1, Color.WHITE);
             }

@@ -26,6 +26,7 @@ namespace MatrixHierarchies
 
         public void Init()
         {
+            PreLoadedTextures.Initialize();
             stopwatch.Start();
             lastTime = stopwatch.ElapsedMilliseconds;
             UI.Initialize();

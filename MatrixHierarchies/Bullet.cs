@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Raylib_cs;
+using System;
 
 namespace MatrixHierarchies
 {
@@ -6,16 +7,15 @@ namespace MatrixHierarchies
     {
         Tank source;
 
-        BoxCollider collider;
         SpriteObject bulletSprite = new SpriteObject();
         float speed = 0;
         Timer lifeTime = new Timer(1);
 
-        public Bullet(string bulletSpriteFileName, float speed, Vector2 position, float rotation, Tank tank)
+        public Bullet(ref Texture2D bulletTexture, float speed, Vector2 position, float rotation, Tank tank)
         {
             source = tank;
 
-            bulletSprite.Load(bulletSpriteFileName);
+            bulletSprite.PreLoad(ref bulletTexture);
             this.speed = speed;
 
             bulletSprite.SetRotate(90 * (float)(MathF.PI / 180.0f));
@@ -40,9 +40,8 @@ namespace MatrixHierarchies
             facing *= deltaTime * speed;
             Translate(facing.x, facing.y);
 
-            // collision against enemies checks here
-
             base.OnUpdate(deltaTime);
+            collider.SetPosition(Position);
         }
 
         //public override void OnDraw()
@@ -50,6 +49,15 @@ namespace MatrixHierarchies
         //    DrawCircleV(Position, (bulletSprite.Width / 2) + (bulletSprite.Height / 2), Color.MAROON);
         //    DrawCircleV(bulletSprite.Position, 5, Color.MAGENTA);
         //}
+
+        public void CheckCollision(Tank tank)
+        {
+            if(Collider.Collision(collider, tank.collider))
+            {
+                //TODO: Tank take damage
+                Destroy();
+            }
+        }
 
         public void Destroy()
         {

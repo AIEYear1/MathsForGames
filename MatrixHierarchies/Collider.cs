@@ -22,6 +22,30 @@ namespace MatrixHierarchies
 
         }
 
+        public abstract void SetPosition(Vector2 pos);
+        public abstract void Debug();
+        public abstract void Rotate(float radians);
+
+        public static bool Collision(Collider lhs, Collider rhs)
+        {
+            if(lhs is BoxCollider lBox)
+            {
+                if (rhs is BoxCollider rBox)
+                    return BoxCollision(lBox, rBox);
+                if (rhs is CircleCollider rCirc)
+                    return BoxCircleCollision(lBox, rCirc);
+            }
+            if(lhs is CircleCollider lCirc)
+            {
+                if (rhs is BoxCollider rBox)
+                    return BoxCircleCollision(rBox, lCirc);
+                if (rhs is CircleCollider rCirc)
+                    return CircleCollision(lCirc, rCirc);
+            }
+
+            return false;
+        }
+
         public static bool BoxCollision(BoxCollider lhs, BoxCollider rhs)
         {
             if (lhs.position.Distance(rhs.position) >
@@ -78,12 +102,8 @@ namespace MatrixHierarchies
                 return false;
             }
 
-            // Calc box width and height
-            float recWidth = lhs.TopLeftPoint.Distance(lhs.TopRightPoint);
-            float recHeight = lhs.TopLeftPoint.Distance(lhs.BottomLeftPoint);
             // Make UnRotated Rectangle in the same spot as the rotated rectangle
-            Rectangle rec = new Rectangle(lhs.position.x - (recWidth / 2), lhs.position.y - (recHeight / 2),
-                                          recWidth, recHeight);
+            Rectangle rec = (Rectangle)lhs;
 
             // Calculate the amount of rotation in the rectangle in degrees using the top left corner of the rectangle
             Vector2 orig = lhs.TopLeftPoint - lhs.position;

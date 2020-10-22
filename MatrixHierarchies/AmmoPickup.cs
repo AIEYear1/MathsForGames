@@ -6,7 +6,6 @@ namespace MatrixHierarchies
 {
     class AmmoPickup : SceneObject
     {
-        BoxCollider collider;
         Tank player;
         SpriteObject ammo1 = new SpriteObject();
         SpriteObject ammo2 = new SpriteObject();
@@ -16,9 +15,9 @@ namespace MatrixHierarchies
         {
             player = tank;
 
-            ammo1.Load("bulletBlueSilver_outline.png");
-            ammo2.Load("bulletBlueSilver_outline.png");
-            ammo3.Load("bulletBlueSilver_outline.png");
+            ammo1.PreLoad(ref PreLoadedTextures.ammoTexture);
+            ammo2.PreLoad(ref PreLoadedTextures.ammoTexture);
+            ammo3.PreLoad(ref PreLoadedTextures.ammoTexture);
 
             ammo1.SetPosition(-ammo1.Width * 1.5f, -ammo1.Height / 2);
             ammo2.SetPosition(-ammo2.Width / 2, -ammo2.Height / 2);
@@ -34,7 +33,7 @@ namespace MatrixHierarchies
 
         public override void OnUpdate(float deltaTime)
         {
-            if(Collider.BoxCollision(collider, player.collider))
+            if(Collider.Collision(collider, player.collider))
             {
                 player.ammoCount.Reset();
                 AmmoManager.DestroyAmmo(this);

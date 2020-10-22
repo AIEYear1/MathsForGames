@@ -7,7 +7,6 @@ namespace MatrixHierarchies
     {
         public float radius = 0;
 
-        CircleCollider collider;
         Color curColor = Color.WHITE;
         Color defaultColor = Color.RED;
         Color pressedColor = Color.GREEN;
@@ -24,7 +23,7 @@ namespace MatrixHierarchies
 
         public override void OnUpdate(float deltaTime)
         {
-            if (Collider.BoxCircleCollision(ObjectColliding.collider, collider))
+            if (Collider.Collision(ObjectColliding.collider, collider))
             {
                 curColor = pressedColor;
             }

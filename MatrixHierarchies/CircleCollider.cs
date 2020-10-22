@@ -15,9 +15,18 @@
             this.radius = radius;
         }
 
-        public void SetPosition(Vector2 pos)
+        public override void SetPosition(Vector2 pos)
         {
             position = pos;
+        }
+
+        public override void Debug()
+        {
+            throw new System.NotImplementedException();
+        }
+        public override void Rotate(float radians)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
