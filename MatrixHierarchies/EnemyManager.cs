@@ -148,5 +148,10 @@ namespace MatrixHierarchies
             }
         }
 
+        public static void RemoveEnemy(AI enemy)
+        {
+            enemies.Remove(enemy);
+            currentNumberOfEnemies--;
+        }
     }
 }

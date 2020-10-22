@@ -25,11 +25,6 @@ namespace MatrixHierarchies
 
         public override void OnUpdate(float deltaTime)
         {
-            if (health.IsComplete(false))
-            {
-                ///Kill tank
-                return;
-            }
 
             Move(deltaTime);
 
@@ -73,6 +68,11 @@ namespace MatrixHierarchies
         public override void TakeDamage()
         {
             health.CountByValue(1);
+            if (health.IsComplete(false))
+            {
+                EnemyManager.RemoveEnemy(this);
+                return;
+            }
             healthBar.SetHealth(health.TimeRemaining / health.delay);
         }
 

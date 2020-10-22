@@ -19,7 +19,7 @@ namespace MatrixHierarchies
         protected SpriteObject turretSprite = new SpriteObject();
         protected SceneObject turretObject = new SceneObject();
 
-        protected readonly float speed = 250, rotationSpeed = 90 * (MathF.PI / 180), turretRotSpeed = 30 * (MathF.PI / 180);
+        protected readonly float speed = 250, rotationSpeed = 90 * (MathF.PI / 180), turretRotSpeed = 50 * (MathF.PI / 180);
         protected float curSpeed = 0, curRot = 0, curTurretRot = 0;
 
         public Tank(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position, float hp)
@@ -44,12 +44,6 @@ namespace MatrixHierarchies
 
         public override void OnUpdate(float deltaTime)
         {
-            if (health.IsComplete(false))
-            {
-                ///Death
-                return;
-            }
-
             RotateBody(deltaTime);
 
             MoveBody(deltaTime);
@@ -57,6 +51,7 @@ namespace MatrixHierarchies
             RotateTurret(deltaTime);
             Game.CurCenter = Position;
 
+            // Fire bullets
             if (IsKeyPressed(KeyboardKey.KEY_SPACE) & attackDelay.Check(false) && !ammoCount.IsComplete(false))
             {
                 float rotation = MathF.Atan2(turretObject.GlobalTransform.m2, turretObject.GlobalTransform.m1);
@@ -70,6 +65,27 @@ namespace MatrixHierarchies
             for (int x = 0; x < bullets.Count; x++)
             {
                 bullets[x].Update(deltaTime);
+
+                if (x >= bullets.Count)
+                    continue;
+
+                // Collision deection for bullets against enemies
+                AI tmpEnemy = null;
+                float dist = float.MaxValue;
+                for (int y = 0; y < EnemyManager.enemies.Count; y++)
+                {
+                    float tmpDist = bullets[x].Position.Distance(EnemyManager.enemies[y].Position);
+                    if(tmpDist < dist)
+                    {
+                        dist = tmpDist;
+                        tmpEnemy = EnemyManager.enemies[y];
+                    }
+                }
+
+                if(tmpEnemy != null)
+                {
+                    bullets[x].CheckCollision(tmpEnemy);
+                }
             }
 
             base.OnUpdate(deltaTime);
@@ -86,6 +102,10 @@ namespace MatrixHierarchies
         public virtual void TakeDamage()
         {
             health.CountByValue(1);
+            if (health.IsComplete(false))
+            {
+                ///Death
+            }
             UI.playerHealth.SetHealth(health.TimeRemaining / health.delay);
         }
 
