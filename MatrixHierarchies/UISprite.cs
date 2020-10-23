@@ -5,8 +5,8 @@ namespace MatrixHierarchies
 {
     class UISprite
     {
-        Rectangle rectangle;
-        Color color;
+        public Rectangle rectangle;
+        protected Color color;
 
         public Vector2 Position
         {

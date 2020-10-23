@@ -11,7 +11,7 @@ namespace MatrixHierarchies
 
         bool canFire = false;
 
-        new readonly float speed = 200, rotationSpeed = 60 * (MathF.PI / 180);
+        new readonly float speed = 200, rotationSpeed = 40 * (MathF.PI / 180), turretRotSpeed = 30 * (MathF.PI / 180);
 
         public AI(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position, float hp, int maxRange, int idealRange, Tank tank) : base(tankSpriteFileName, turretSpriteFileName, rotation, position, hp)
         {

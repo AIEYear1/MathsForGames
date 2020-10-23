@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
 using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
@@ -14,19 +13,22 @@ namespace MatrixHierarchies
 
     static class EnemyManager
     {
-        public static List<AI> enemies = new List<AI>();
-        static readonly Bounds bounds = new Bounds(Program.Center, 10000, 1000);
+        public static List<AI> curEnemies = new List<AI>();
+        static readonly Bounds spawnBounds = new Bounds(Program.Center, 10000, 1000);
 
-        public static bool Paused = false;
+        public static bool Paused = true;
         public static List<float> nextEnemies = new List<float>();
 
-        public static SpawnStage stage = SpawnStage.Wait;
+        public static SpawnStage curStage = SpawnStage.Wait;
 
-        static List<SubWave> Wave = new List<SubWave>();
         public static int wave, totalEnemiesForWave, currentNumberOfEnemies;
 
+        public static Vector2 nearestEnemy = Program.Center;
+
+        static List<SubWave> Wave = new List<SubWave>();
+
         static float pauseTime = 0;
-        static bool lastVal = false;
+        static bool gotTimeAtPause = false;
         static Timer waitTimer;
 
         static Tank player;
@@ -39,16 +41,16 @@ namespace MatrixHierarchies
 
         public static void Update(float deltaTime)
         {
-            if (Paused && !lastVal)
+            if (Paused && !gotTimeAtPause)
             {
                 pauseTime = (float)GetTime();
-                lastVal = true;
+                gotTimeAtPause = true;
             }
 
-            if (!Paused && lastVal)
+            if (!Paused && gotTimeAtPause)
             {
                 pauseTime = (float)GetTime() - pauseTime;
-                lastVal = false;
+                gotTimeAtPause = false;
 
                 if (wave > 0)
                 {
@@ -57,27 +59,35 @@ namespace MatrixHierarchies
                 }
             }
 
-            if (Paused) 
+            if (Paused)
                 return;
 
-            if (stage == SpawnStage.Wait)
+            if (curStage == SpawnStage.Wait)
                 Wait();
-            else if (stage == SpawnStage.Start)
+            else if (curStage == SpawnStage.Start)
                 StartSpawn();
-            else if (stage == SpawnStage.Play)
+            else if (curStage == SpawnStage.Play)
                 Play();
 
-            for(int x = 0; x < enemies.Count; x++)
+            float distFromEnemy = float.MaxValue;
+            for (int x = 0; x < curEnemies.Count; x++)
             {
-                enemies[x].Update(deltaTime);
+                float tmpDist = Program.Center.Distance(curEnemies[x].Position);
+                if (tmpDist < distFromEnemy)
+                {
+                    distFromEnemy = tmpDist;
+                    nearestEnemy = curEnemies[x].Position;
+                }
+
+                curEnemies[x].Update(deltaTime);
             }
         }
 
         public static void Draw()
         {
-            for (int x = 0; x < enemies.Count; x++)
+            for (int x = 0; x < curEnemies.Count; x++)
             {
-                enemies[x].Draw();
+                curEnemies[x].Draw();
             }
         }
 
@@ -87,7 +97,7 @@ namespace MatrixHierarchies
         static void Wait()
         {
             if (waitTimer.Check() && currentNumberOfEnemies <= totalEnemiesForWave / 2)
-                stage = SpawnStage.Start;
+                curStage = SpawnStage.Start;
         }
 
         /// <summary>
@@ -117,7 +127,7 @@ namespace MatrixHierarchies
             }
 
             currentNumberOfEnemies = totalEnemiesForWave;
-            stage = SpawnStage.Play;
+            curStage = SpawnStage.Play;
         }
 
         /// <summary>
@@ -131,18 +141,18 @@ namespace MatrixHierarchies
                 {
                     if (Wave[i].Spawn())
                     {
-                        enemies.Add(new AI("tankRed_outline.png", "barrelRed.png", -90 * (float)(MathF.PI / 180.0f), bounds.PointInBounds(), 3, 1000, 300, player));
+                        curEnemies.Add(new AI("tankRed_outline.png", "barrelRed.png", -90 * (float)(MathF.PI / 180.0f), spawnBounds.PointInBounds(), 3, 1000, 300, player));
                         nextEnemies.RemoveAt(0); //Lambdas yay
                     }
                 }
-                if (Wave[i].IsDone()) 
+                if (Wave[i].IsDone())
                     Wave.Remove(Wave[i]);
             }
 
             if (Wave.Count == 0)
             {
                 Console.WriteLine("wave finished"); //Signal the end of the wave
-                stage = SpawnStage.Wait;
+                curStage = SpawnStage.Wait;
 
                 nextEnemies.Clear();
             }
@@ -150,8 +160,9 @@ namespace MatrixHierarchies
 
         public static void RemoveEnemy(AI enemy)
         {
-            enemies.Remove(enemy);
+            curEnemies.Remove(enemy);
             currentNumberOfEnemies--;
+            Tank.enemiesDefeated++;
         }
     }
 }

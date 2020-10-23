@@ -1,5 +1,5 @@
-﻿using static Raylib_cs.Raylib;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
 {
@@ -74,7 +74,7 @@ namespace MatrixHierarchies
         public List<float> GetEnemies()
         {
             List<float> g = new List<float>();
-            for (int i = 0; i < amount; i++) 
+            for (int i = 0; i < amount; i++)
                 g.Add(time + (i * spacing));
 
             return g;

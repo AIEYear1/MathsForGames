@@ -4,7 +4,7 @@ using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
 {
-    static class Utils
+    class Utils
     {
         public static float Lerp(float start, float end, float increment)
         {

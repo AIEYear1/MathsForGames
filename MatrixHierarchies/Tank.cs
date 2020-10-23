@@ -7,6 +7,8 @@ namespace MatrixHierarchies
 {
     class Tank : SceneObject
     {
+        public static uint enemiesDefeated = 0;
+
         public List<Bullet> bullets = new List<Bullet>();
 
         public Timer ammoCount = new Timer(20);
@@ -19,7 +21,7 @@ namespace MatrixHierarchies
         protected SpriteObject turretSprite = new SpriteObject();
         protected SceneObject turretObject = new SceneObject();
 
-        protected readonly float speed = 250, rotationSpeed = 90 * (MathF.PI / 180), turretRotSpeed = 50 * (MathF.PI / 180);
+        protected readonly float speed = 350, rotationSpeed = 120 * (MathF.PI / 180), turretRotSpeed = 80 * (MathF.PI / 180);
         protected float curSpeed = 0, curRot = 0, curTurretRot = 0;
 
         public Tank(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position, float hp)
@@ -72,17 +74,17 @@ namespace MatrixHierarchies
                 // Collision deection for bullets against enemies
                 AI tmpEnemy = null;
                 float dist = float.MaxValue;
-                for (int y = 0; y < EnemyManager.enemies.Count; y++)
+                for (int y = 0; y < EnemyManager.curEnemies.Count; y++)
                 {
-                    float tmpDist = bullets[x].Position.Distance(EnemyManager.enemies[y].Position);
-                    if(tmpDist < dist)
+                    float tmpDist = bullets[x].Position.Distance(EnemyManager.curEnemies[y].Position);
+                    if (tmpDist < dist)
                     {
                         dist = tmpDist;
-                        tmpEnemy = EnemyManager.enemies[y];
+                        tmpEnemy = EnemyManager.curEnemies[y];
                     }
                 }
 
-                if(tmpEnemy != null)
+                if (tmpEnemy != null)
                 {
                     bullets[x].CheckCollision(tmpEnemy);
                 }
@@ -104,7 +106,8 @@ namespace MatrixHierarchies
             health.CountByValue(1);
             if (health.IsComplete(false))
             {
-                ///Death
+                Program.state = GameState.End;
+                EnemyManager.Paused = true;
             }
             UI.playerHealth.SetHealth(health.TimeRemaining / health.delay);
         }
