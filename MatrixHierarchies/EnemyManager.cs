@@ -6,9 +6,9 @@ namespace MatrixHierarchies
 {
     public enum SpawnStage
     {
-        Wait,
-        Start,
-        Play
+        WAITFORWAVEEND,
+        PREPAREWAVE,
+        SPAWNENEMIES
     }
 
     static class EnemyManager
@@ -19,9 +19,9 @@ namespace MatrixHierarchies
         public static bool Paused = true;
         public static List<float> nextEnemies = new List<float>();
 
-        public static SpawnStage curStage = SpawnStage.Wait;
+        public static SpawnStage curStage = SpawnStage.WAITFORWAVEEND;
 
-        public static int wave, totalEnemiesForWave, currentNumberOfEnemies;
+        public static int waveNum, totalEnemiesForWave, currentNumberOfEnemies;
 
         public static Vector2 nearestEnemy = Program.Center;
 
@@ -52,7 +52,7 @@ namespace MatrixHierarchies
                 pauseTime = (float)GetTime() - pauseTime;
                 gotTimeAtPause = false;
 
-                if (wave > 0)
+                if (waveNum > 0)
                 {
                     foreach (SubWave sw in Wave)
                         sw.timestamp += pauseTime;
@@ -62,11 +62,11 @@ namespace MatrixHierarchies
             if (Paused)
                 return;
 
-            if (curStage == SpawnStage.Wait)
+            if (curStage == SpawnStage.WAITFORWAVEEND)
                 Wait();
-            else if (curStage == SpawnStage.Start)
+            else if (curStage == SpawnStage.PREPAREWAVE)
                 StartSpawn();
-            else if (curStage == SpawnStage.Play)
+            else if (curStage == SpawnStage.SPAWNENEMIES)
                 Play();
 
             float distFromEnemy = float.MaxValue;
@@ -97,7 +97,7 @@ namespace MatrixHierarchies
         static void Wait()
         {
             if (waitTimer.Check() && currentNumberOfEnemies <= totalEnemiesForWave / 2)
-                curStage = SpawnStage.Start;
+                curStage = SpawnStage.PREPAREWAVE;
         }
 
         /// <summary>
@@ -105,19 +105,19 @@ namespace MatrixHierarchies
         /// </summary>
         static void StartSpawn()
         {
-            wave++;
+            waveNum++;
             totalEnemiesForWave = currentNumberOfEnemies;
 
-            Wave.Add(new SubWave(wave, 0f, 0.5f, 6 + (int)(2.0f * (wave - 1))));
-            if (wave > 6)
-                for (int i = 0; i < wave / 6; i++)
-                    Wave.Add(new SubWave(wave, (i * 3) + 2, 0.75f, 1 + (int)(wave / 3)));
-            if (wave > 12)
-                for (int i = 0; i < (wave / 6) - 1; i++)
-                    Wave.Add(new SubWave(wave, (i * 3) + 3, 1f, 1 + (int)(wave / 3)));
-            if (wave > 24)
-                for (int i = 0; i < (wave / 6) - 2; i++)
-                    Wave.Add(new SubWave(wave, (i * 3) + 3, 1f, 1 + (int)(wave / 3)));
+            Wave.Add(new SubWave(waveNum, 0f, 0.5f, 6 + (int)(2.0f * (waveNum - 1))));
+            if (waveNum > 6)
+                for (int i = 0; i < waveNum / 6; i++)
+                    Wave.Add(new SubWave(waveNum, (i * 3) + 2, 0.75f, 1 + (int)(waveNum / 3)));
+            if (waveNum > 12)
+                for (int i = 0; i < (waveNum / 6) - 1; i++)
+                    Wave.Add(new SubWave(waveNum, (i * 3) + 3, 1f, 1 + (int)(waveNum / 3)));
+            if (waveNum > 24)
+                for (int i = 0; i < (waveNum / 6) - 2; i++)
+                    Wave.Add(new SubWave(waveNum, (i * 3) + 3, 1f, 1 + (int)(waveNum / 3)));
 
             foreach (SubWave sw in Wave)
             {
@@ -127,7 +127,7 @@ namespace MatrixHierarchies
             }
 
             currentNumberOfEnemies = totalEnemiesForWave;
-            curStage = SpawnStage.Play;
+            curStage = SpawnStage.SPAWNENEMIES;
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace MatrixHierarchies
             if (Wave.Count == 0)
             {
                 Console.WriteLine("wave finished"); //Signal the end of the wave
-                curStage = SpawnStage.Wait;
+                curStage = SpawnStage.WAITFORWAVEEND;
 
                 nextEnemies.Clear();
             }

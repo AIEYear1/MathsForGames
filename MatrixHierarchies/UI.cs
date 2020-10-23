@@ -15,9 +15,10 @@ namespace MatrixHierarchies
 
         public static void Draw(Tank player)
         {
+            DrawText(fps.ToString(), 10, 10, 12, Color.RED);
             DrawAmmo(player);
             playerHealth.Draw();
-            DrawText("Enemies " + EnemyManager.currentNumberOfEnemies.ToString("00") + " : Wave " + EnemyManager.wave.ToString("00"),
+            DrawText("Enemies " + EnemyManager.currentNumberOfEnemies.ToString("00") + " : Wave " + EnemyManager.waveNum.ToString("00"),
                      (int)(Program.ScreenSpace.width / 2) - 190, 0, 30, Color.DARKGRAY);
             radar.Draw();
         }

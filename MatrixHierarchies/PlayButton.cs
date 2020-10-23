@@ -39,7 +39,7 @@ namespace MatrixHierarchies
 
                 if (IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
                 {
-                    Program.state = GameState.Play;
+                    Game.currentState = GameState.PLAY;
                     EnemyManager.Paused = false;
                 }
 
