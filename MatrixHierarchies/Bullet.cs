@@ -9,11 +9,13 @@ namespace MatrixHierarchies
 
         SpriteObject bulletSprite = new SpriteObject();
         float speed = 0;
-        Timer lifeTime = new Timer(1);
+        Timer lifeTime;
 
-        public Bullet(ref Texture2D bulletTexture, float speed, Vector2 position, float rotation, Tank tank)
+        public Bullet(ref Texture2D bulletTexture, float speed, Vector2 position, float rotation, float bulletLifetime, Tank tank)
         {
             source = tank;
+
+            lifeTime = new Timer(bulletLifetime);
 
             bulletSprite.PreLoad(ref bulletTexture);
             this.speed = speed;

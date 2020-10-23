@@ -141,7 +141,7 @@ namespace MatrixHierarchies
                 {
                     if (Wave[i].Spawn())
                     {
-                        curEnemies.Add(new AI("tankRed_outline.png", "barrelRed.png", -90 * (float)(MathF.PI / 180.0f), spawnBounds.PointInBounds(), 3, 1000, 300, player));
+                        curEnemies.Add(new AI(-90 * (float)(MathF.PI / 180.0f), spawnBounds.PointInBounds(), 3, 1000, 300, player));
                         nextEnemies.RemoveAt(0); //Lambdas yay
                     }
                 }

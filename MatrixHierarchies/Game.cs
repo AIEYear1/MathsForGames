@@ -48,10 +48,10 @@ namespace MatrixHierarchies
             stopwatch.Start();
             lastTime = stopwatch.ElapsedMilliseconds;
 
-            player = new Tank("tankBlue_outline.png", "barrelBlue.png", -90 * (float)(MathF.PI / 180.0f), Program.Center, 20);
+            player = new Tank(@"Textures\tankBlue_outline.png", @"Textures\barrelBlue.png", -90 * (float)(MathF.PI / 180.0f), Program.Center, 20);
 
             UI.Initialize();
-            AmmoManager.Initialize(player);
+            PickupManager.Initialize(player);
             EnemyManager.Initialize(player);
         }
 
@@ -98,7 +98,7 @@ namespace MatrixHierarchies
 
             background.Update(deltaTime);
             EnemyManager.Update(deltaTime);
-            AmmoManager.Update(deltaTime);
+            PickupManager.Update(deltaTime);
 
             CurCenter = Program.Center;
             lastTime = currentTime;
@@ -137,7 +137,7 @@ namespace MatrixHierarchies
         {
             background.Draw();
 
-            AmmoManager.Draw();
+            PickupManager.Draw();
             EnemyManager.Draw();
 
             player.Draw();

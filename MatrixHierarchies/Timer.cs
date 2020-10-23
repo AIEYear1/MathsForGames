@@ -1,4 +1,5 @@
-﻿using static Raylib_cs.Raylib;
+﻿using System;
+using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
 {
@@ -57,6 +58,8 @@ namespace MatrixHierarchies
         public void CountByTime()
         {
             Time += GetFrameTime();
+            Time = MathF.Max(Time, 0);
+            Time = MathF.Min(Time, delay);
         }
 
         /// <summary>
@@ -66,6 +69,8 @@ namespace MatrixHierarchies
         public void CountByValue(float value)
         {
             Time += value;
+            Time = MathF.Max(Time, 0);
+            Time = MathF.Min(Time, delay);
         }
 
         /// <summary>

@@ -13,8 +13,9 @@ namespace MatrixHierarchies
 
         new readonly float speed = 200, rotationSpeed = 40 * (MathF.PI / 180), turretRotSpeed = 30 * (MathF.PI / 180);
 
-        public AI(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position, float hp, int maxRange, int idealRange, Tank tank) : base(tankSpriteFileName, turretSpriteFileName, rotation, position, hp)
+        public AI(float rotation, Vector2 position, float hp, int maxRange, int idealRange, Tank tank) : base(rotation, position, hp)
         {
+            attackDelay = new Timer(1.5f);
             player = tank;
 
             distFromEnemyCenter = (collider.Position.Distance((collider as BoxCollider).TopLeftPoint) + 10 + 5);
@@ -36,8 +37,10 @@ namespace MatrixHierarchies
             {
                 float rotation = MathF.Atan2(turretObject.GlobalTransform.m2, turretObject.GlobalTransform.m1);
                 rotation = (rotation < 0) ? rotation + (2 * MathF.PI) : rotation;
+
                 Vector2 bulletPos = Position + (new Vector2(turretObject.GlobalTransform.m1, turretObject.GlobalTransform.m2).Normalised() * turretSprite.Height);
-                bullets.Add(new Bullet(ref PreLoadedTextures.EnemyBulletTexture, 600, bulletPos, rotation, this));
+                
+                bullets.Add(new Bullet(ref PreLoadedTextures.EnemyBulletTexture, 600, bulletPos, rotation, 1, this));
                 attackDelay.Reset();
             }
 

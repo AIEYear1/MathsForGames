@@ -12,7 +12,7 @@ namespace MatrixHierarchies
         public List<Bullet> bullets = new List<Bullet>();
 
         public Timer ammoCount = new Timer(20);
-        public Timer attackDelay = new Timer(1.5f);
+        public Timer attackDelay = new Timer(1);
 
         public Timer health;
 
@@ -43,6 +43,25 @@ namespace MatrixHierarchies
             attackDelay.Reset(attackDelay.delay);
             health = new Timer(hp);
         }
+        public Tank(float rotation, Vector2 position, float hp)
+        {
+            tankSprite.PreLoad(ref PreLoadedTextures.EnemyTankTexture);
+            tankSprite.SetRotate(rotation);
+            tankSprite.SetPosition(-tankSprite.Width / 2.0f, tankSprite.Height / 2.0f);
+            turretSprite.PreLoad(ref PreLoadedTextures.EnemyTurretTexture);
+            turretSprite.SetRotate(rotation);
+            turretSprite.SetPosition(0, turretSprite.Width / 2.0f);
+
+            turretObject.AddChild(turretSprite);
+            AddChild(tankSprite);
+            AddChild(turretObject);
+
+            SetPosition(position.x, position.y);
+            collider = new BoxCollider(position, tankSprite.Width, tankSprite.Height, rotation);
+
+            attackDelay.Reset(attackDelay.delay);
+            health = new Timer(hp);
+        }
 
         public override void OnUpdate(float deltaTime)
         {
@@ -58,8 +77,11 @@ namespace MatrixHierarchies
             {
                 float rotation = MathF.Atan2(turretObject.GlobalTransform.m2, turretObject.GlobalTransform.m1);
                 rotation = (rotation < 0) ? rotation + (2 * MathF.PI) : rotation;
+
                 Vector2 bulletPos = Position + (new Vector2(turretObject.GlobalTransform.m1, turretObject.GlobalTransform.m2).Normalised() * turretSprite.Height);
-                bullets.Add(new Bullet(ref PreLoadedTextures.EnemyBulletTexture, 600, bulletPos, rotation, this));
+                
+                bullets.Add(new Bullet(ref PreLoadedTextures.EnemyBulletTexture, 600, bulletPos, rotation, 2, this));
+
                 ammoCount.CountByValue(1);
                 attackDelay.Reset();
             }

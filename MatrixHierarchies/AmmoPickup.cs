@@ -11,9 +11,9 @@
         {
             player = tank;
 
-            ammo1.PreLoad(ref PreLoadedTextures.AmmoUITexture);
-            ammo2.PreLoad(ref PreLoadedTextures.AmmoUITexture);
-            ammo3.PreLoad(ref PreLoadedTextures.AmmoUITexture);
+            ammo1.PreLoad(ref PreLoadedTextures.AmmoPickupTexture);
+            ammo2.PreLoad(ref PreLoadedTextures.AmmoPickupTexture);
+            ammo3.PreLoad(ref PreLoadedTextures.AmmoPickupTexture);
 
             ammo1.SetPosition(-ammo1.Width * 1.5f, -ammo1.Height / 2);
             ammo2.SetPosition(-ammo2.Width / 2, -ammo2.Height / 2);
@@ -32,16 +32,11 @@
             if (Collider.Collision(collider, player.collider))
             {
                 player.ammoCount.Reset();
-                AmmoManager.DestroyAmmo(this);
+                PickupManager.DestroyAmmo(this);
 
             }
             base.OnUpdate(deltaTime);
             collider.SetPosition(Position);
         }
-
-        //public override void OnDraw()
-        //{
-        //    collider.Debug();
-        //}
     }
 }

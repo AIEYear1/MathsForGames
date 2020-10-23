@@ -30,8 +30,8 @@ namespace MatrixHierarchies
             for (int x = 0; x < player.ammoCount.TimeRemaining; x++)
             {
                 float heightOffset = 1 + (x * 0.5f);
-                DrawTextureEx(PreLoadedTextures.AmmoPickupTexture, new Vector2(Program.ScreenSpace.width,
-                    Program.ScreenSpace.height - 200 - (PreLoadedTextures.AmmoPickupTexture.width * heightOffset)), 90, 1, colorOpacity);
+                DrawTextureEx(PreLoadedTextures.AmmoUITexture, new Vector2(Program.ScreenSpace.width,
+                    Program.ScreenSpace.height - 200 - (PreLoadedTextures.AmmoUITexture.width * heightOffset)), 90, 1, colorOpacity);
             }
         }
     }

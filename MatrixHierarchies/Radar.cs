@@ -19,8 +19,9 @@ namespace MatrixHierarchies
 
             Vector2 startPoint = new Vector2(rectangle.x + (rectangle.width / 2), rectangle.y + (rectangle.height / 2));
 
-            DrawLineEx(startPoint, startPoint + ((EnemyManager.nearestEnemy - Program.Center).Normalised() * 75), 5, Color.RED);
-            DrawLineEx(startPoint, startPoint + ((AmmoManager.nearestAmmoDrop - Program.Center).Normalised() * 40), 5, Color.BLUE);
+            DrawLineEx(startPoint, startPoint + ((EnemyManager.nearestEnemy - Program.Center).Normalised() * 80), 5, Color.RED);
+            DrawLineEx(startPoint, startPoint + ((PickupManager.nearestHealthDrop - Program.Center).Normalised() * 55), 5, Color.PINK);
+            DrawLineEx(startPoint, startPoint + ((PickupManager.nearestAmmoDrop - Program.Center).Normalised() * 40), 5, Color.BLUE);
         }
     }
 }
