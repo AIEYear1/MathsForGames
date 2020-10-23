@@ -11,9 +11,9 @@
         {
             player = tank;
 
-            ammo1.PreLoad(ref PreLoadedTextures.ammoTexture);
-            ammo2.PreLoad(ref PreLoadedTextures.ammoTexture);
-            ammo3.PreLoad(ref PreLoadedTextures.ammoTexture);
+            ammo1.PreLoad(ref PreLoadedTextures.AmmoUITexture);
+            ammo2.PreLoad(ref PreLoadedTextures.AmmoUITexture);
+            ammo3.PreLoad(ref PreLoadedTextures.AmmoUITexture);
 
             ammo1.SetPosition(-ammo1.Width * 1.5f, -ammo1.Height / 2);
             ammo2.SetPosition(-ammo2.Width / 2, -ammo2.Height / 2);

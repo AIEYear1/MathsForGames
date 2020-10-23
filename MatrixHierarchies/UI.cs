@@ -15,7 +15,7 @@ namespace MatrixHierarchies
 
         public static void Draw(Tank player)
         {
-            DrawText(fps.ToString(), 10, 10, 12, Color.RED);
+            DrawText(Game.fps.ToString(), 10, 10, 12, Color.RED);
             DrawAmmo(player);
             playerHealth.Draw();
             DrawText("Enemies " + EnemyManager.currentNumberOfEnemies.ToString("00") + " : Wave " + EnemyManager.waveNum.ToString("00"),
@@ -30,8 +30,8 @@ namespace MatrixHierarchies
             for (int x = 0; x < player.ammoCount.TimeRemaining; x++)
             {
                 float heightOffset = 1 + (x * 0.5f);
-                DrawTextureEx(PreLoadedTextures.ammoPickupTexture, new Vector2(Program.ScreenSpace.width,
-                    Program.ScreenSpace.height - 200 - (PreLoadedTextures.ammoPickupTexture.width * heightOffset)), 90, 1, colorOpacity);
+                DrawTextureEx(PreLoadedTextures.AmmoPickupTexture, new Vector2(Program.ScreenSpace.width,
+                    Program.ScreenSpace.height - 200 - (PreLoadedTextures.AmmoPickupTexture.width * heightOffset)), 90, 1, colorOpacity);
             }
         }
     }

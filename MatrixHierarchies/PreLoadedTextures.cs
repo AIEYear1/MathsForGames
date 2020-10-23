@@ -5,19 +5,23 @@ namespace MatrixHierarchies
 {
     static class PreLoadedTextures
     {
-        public static Texture2D playerBulletTexture;
-        public static Texture2D enemyBulletTexture;
+        public static Texture2D BackgroundTexture;
 
-        public static Texture2D ammoPickupTexture;
-        public static Texture2D ammoTexture;
+        public static Texture2D PlayerBulletTexture;
+        public static Texture2D EnemyBulletTexture;
+
+        public static Texture2D AmmoPickupTexture;
+        public static Texture2D AmmoUITexture;
 
         public static void Initialize()
         {
-            playerBulletTexture = LoadTexture("bulletBlue_outline.png");
-            enemyBulletTexture = LoadTexture("bulletBlue_outline.png");
+            BackgroundTexture = LoadTexture(@"Background.png");
 
-            ammoPickupTexture = LoadTexture("bulletBlue_outline.png");
-            ammoTexture = LoadTexture("bulletBlueSilver_outline.png");
+            PlayerBulletTexture = LoadTexture("bulletBlue_outline.png");
+            EnemyBulletTexture = LoadTexture("bulletBlue_outline.png");
+
+            AmmoPickupTexture = LoadTexture("bulletBlue_outline.png");
+            AmmoUITexture = LoadTexture("bulletBlueSilver_outline.png");
         }
     }
 }

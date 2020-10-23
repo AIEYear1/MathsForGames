@@ -22,13 +22,15 @@ namespace MatrixHierarchies
 
         #region PLay
         public static Vector2 CurCenter = Program.Center;
+        public static int fps = 1;
+
         Tank player;
+        Background background = new Background();
         Stopwatch stopwatch = new Stopwatch();
 
         long currentTime = 0;
         long lastTime = 0;
         float timer = 0;
-        int fps = 1;
         int frames;
 
         float deltaTime = .005f;
@@ -45,8 +47,10 @@ namespace MatrixHierarchies
             PreLoadedTextures.Initialize();
             stopwatch.Start();
             lastTime = stopwatch.ElapsedMilliseconds;
-            UI.Initialize();
+
             player = new Tank("tankBlue_outline.png", "barrelBlue.png", -90 * (float)(MathF.PI / 180.0f), Program.Center, 20);
+
+            UI.Initialize();
             AmmoManager.Initialize(player);
             EnemyManager.Initialize(player);
         }
@@ -92,8 +96,8 @@ namespace MatrixHierarchies
 
             player.Update(deltaTime);
 
+            background.Update(deltaTime);
             EnemyManager.Update(deltaTime);
-
             AmmoManager.Update(deltaTime);
 
             CurCenter = Program.Center;
@@ -106,6 +110,8 @@ namespace MatrixHierarchies
 
         public void Draw()
         {
+            BeginDrawing();
+            ClearBackground(Color.WHITE);
             switch (currentState)
             {
                 case GameState.START:
@@ -118,6 +124,8 @@ namespace MatrixHierarchies
                     EndDraw();
                     break;
             }
+            EndDrawing();
+
         }
 
         void StartDraw()
@@ -127,6 +135,8 @@ namespace MatrixHierarchies
         }
         void GameDraw()
         {
+            background.Draw();
+
             AmmoManager.Draw();
             EnemyManager.Draw();
 

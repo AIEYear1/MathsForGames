@@ -59,7 +59,7 @@ namespace MatrixHierarchies
                 float rotation = MathF.Atan2(turretObject.GlobalTransform.m2, turretObject.GlobalTransform.m1);
                 rotation = (rotation < 0) ? rotation + (2 * MathF.PI) : rotation;
                 Vector2 bulletPos = Position + (new Vector2(turretObject.GlobalTransform.m1, turretObject.GlobalTransform.m2).Normalised() * turretSprite.Height);
-                bullets.Add(new Bullet(ref PreLoadedTextures.enemyBulletTexture, 600, bulletPos, rotation, this));
+                bullets.Add(new Bullet(ref PreLoadedTextures.EnemyBulletTexture, 600, bulletPos, rotation, this));
                 ammoCount.CountByValue(1);
                 attackDelay.Reset();
             }

@@ -25,13 +25,8 @@ namespace MatrixHierarchies
             // Game Loop
             while (!WindowShouldClose())
             {
-                BeginDrawing();
-                ClearBackground(Color.WHITE);
-
                 game.Update();
                 game.Draw();
-
-                EndDrawing();
             }
 
             game.ShutDown();
