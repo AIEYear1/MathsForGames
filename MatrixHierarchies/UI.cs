@@ -19,7 +19,7 @@ namespace MatrixHierarchies
             DrawAmmo(player);
             playerHealth.Draw();
             DrawText("Enemies " + EnemyManager.currentNumberOfEnemies.ToString("00") + " : Wave " + EnemyManager.waveNum.ToString("00"),
-                     (int)(Program.ScreenSpace.width / 2) - 190, 0, 30, Color.DARKGRAY);
+                     (int)(Program.ScreenSpace.width / 2) - 190, 5, 35, Color.DARKBLUE);
             radar.Draw();
         }
 

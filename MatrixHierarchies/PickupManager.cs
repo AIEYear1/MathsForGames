@@ -37,7 +37,7 @@ namespace MatrixHierarchies
 
                 ammoDrops[x].Update(deltaTime);
 
-                if(x < healthDrops.Count)
+                if (x < healthDrops.Count)
                 {
                     float tmpHealthDist = Program.Center.Distance(healthDrops[x].Position);
                     if (tmpHealthDist < distFromHealth)
@@ -57,7 +57,7 @@ namespace MatrixHierarchies
             {
                 ammoDrops[x].Draw();
 
-                if(x < healthDrops.Count)
+                if (x < healthDrops.Count)
                 {
                     healthDrops[x].Draw();
                 }

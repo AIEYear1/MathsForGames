@@ -7,7 +7,7 @@ namespace MatrixHierarchies
     class Background : SceneObject
     {
         readonly Vector2 tiling = new Vector2(Program.ScreenSpace.width / 20, Program.ScreenSpace.height / 20);
-        Rectangle quad = new Rectangle(-Program.ScreenSpace.width / 2, -Program.ScreenSpace.height / 2, 
+        Rectangle quad = new Rectangle(-Program.ScreenSpace.width / 2, -Program.ScreenSpace.height / 2,
                                         Program.ScreenSpace.width * 2, Program.ScreenSpace.height * 2);
 
         public Background()

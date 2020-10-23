@@ -79,13 +79,14 @@ namespace MatrixHierarchies
                 rotation = (rotation < 0) ? rotation + (2 * MathF.PI) : rotation;
 
                 Vector2 bulletPos = Position + (new Vector2(turretObject.GlobalTransform.m1, turretObject.GlobalTransform.m2).Normalised() * turretSprite.Height);
-                
-                bullets.Add(new Bullet(ref PreLoadedTextures.EnemyBulletTexture, 600, bulletPos, rotation, 2, this));
+
+                bullets.Add(new Bullet(ref PreLoadedTextures.EnemyBulletTexture, 800, bulletPos, rotation, 3, this));
 
                 ammoCount.CountByValue(1);
                 attackDelay.Reset();
             }
 
+            // Update bullets and check for bullet collision
             for (int x = 0; x < bullets.Count; x++)
             {
                 bullets[x].Update(deltaTime);
@@ -105,13 +106,19 @@ namespace MatrixHierarchies
                         tmpEnemy = EnemyManager.curEnemies[y];
                     }
                 }
-
                 if (tmpEnemy != null)
                 {
                     bullets[x].CheckCollision(tmpEnemy);
                 }
             }
 
+            // Push enemies
+            for (int x = 0; x < EnemyManager.curEnemies.Count; x++)
+            {
+                Push(EnemyManager.curEnemies[x]);
+            }
+
+            // Shift object back to simulate camera movement
             base.OnUpdate(deltaTime);
         }
 
@@ -142,6 +149,20 @@ namespace MatrixHierarchies
                 Vector3 facing = new Vector3(LocalTransform.m1, LocalTransform.m2, 1);
                 facing *= deltaTime * curSpeed;
                 Translate(facing.x, facing.y);
+            }
+        }
+
+        public void Push(Tank toPush)
+        {
+            float pusherRad = MathF.Sqrt(MathF.Pow(tankSprite.Width / 2, 2) + MathF.Pow(tankSprite.Height / 2, 2));
+            float pushieRad = MathF.Sqrt(MathF.Pow(toPush.tankSprite.Width / 2, 2) + MathF.Pow(toPush.tankSprite.Height / 2, 2));
+
+            if (Position.Distance(toPush.Position) < pusherRad + pushieRad)
+            {
+                Vector2 push = (toPush.Position - Position).Normalised();
+                push *= MathF.Abs(Position.Distance(toPush.Position) - (pushieRad + pusherRad));
+
+                toPush.Translate(push.x, push.y);
             }
         }
         void RotateBody(float deltaTime)
