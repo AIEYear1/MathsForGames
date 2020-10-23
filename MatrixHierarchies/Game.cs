@@ -130,7 +130,10 @@ namespace MatrixHierarchies
 
         void StartDraw()
         {
-            DrawText("Insert Tank Pun Here", (int)(Program.ScreenSpace.width / 2) - 390, 110, 70, Color.BLUE);
+            DrawText("Insert Tank Pun Here", (int)(Program.ScreenSpace.width / 2) - 390, 110, 70, Color.DARKBLUE);
+            DrawText("     WASD to move, Q and E to rotate turret, Space to shoot\n" +
+                     "Blue line points to ammo, Pink line to mdekits, and red to Enemies",
+                     (int)(Program.ScreenSpace.width / 2) - 400, (int)(Program.ScreenSpace.width / 2) - 150, 25, Color.BLUE);
             playButton.Draw();
         }
         void GameDraw()
