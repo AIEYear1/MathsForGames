@@ -80,6 +80,12 @@ namespace MatrixHierarchies
                 }
 
                 curEnemies[x].Update(deltaTime);
+
+                for (int y = 0; y < curEnemies.Count; y++)
+                {
+                    if(x != y)
+                        curEnemies[x].Push(curEnemies[y]);
+                }
             }
         }
 

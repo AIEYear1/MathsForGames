@@ -4,7 +4,7 @@ using static Raylib_cs.Raylib;
 namespace MatrixHierarchies
 {
     /// <summary>
-    /// Used as an actual timer or can be used as a value counter
+    /// Used as an actual timer or can be used as a counter
     /// </summary>
     public struct Timer
     {
@@ -40,7 +40,6 @@ namespace MatrixHierarchies
             this.Time = 0;
             this.delay = delay;
         }
-
 
 
         /// <summary>

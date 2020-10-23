@@ -122,6 +122,20 @@ namespace MatrixHierarchies
             }
         }
 
+        public void Push(AI toPush)
+        {
+            float pusherRad = MathF.Sqrt(MathF.Pow(tankSprite.Width / 2, 2) + MathF.Pow(tankSprite.Height / 2, 2));
+            float pushieRad = MathF.Sqrt(MathF.Pow(toPush.tankSprite.Width / 2, 2) + MathF.Pow(toPush.tankSprite.Height / 2, 2));
+
+            if (Position.Distance(toPush.Position) < pusherRad + pushieRad)
+            {
+                Vector2 push = (toPush.Position - Position).Normalised();
+                push *= MathF.Abs(Position.Distance(toPush.Position) - (pushieRad+ pusherRad));
+
+                toPush.Translate(push.x, push.y);
+            }
+        }
+
         void RotateTurret(float deltaTime)
         {
             if (Position.Distance(player.Position) > bounds.maxRadius)
