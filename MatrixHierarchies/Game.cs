@@ -14,6 +14,9 @@ namespace MatrixHierarchies
     }
     class Game
     {
+////////// TODO: Develop excuses to use new Color Lerping /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // ColorRGB.Lerp(Color, Color, increment);
+
         // Current state the game is in
         public static GameState currentState = GameState.START;
 
