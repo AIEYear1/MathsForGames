@@ -9,7 +9,8 @@ namespace MatrixHierarchies
     {
         START,
         PLAY,
-        END
+        END,
+        TEST
     }
     class Game
     {
@@ -63,6 +64,8 @@ namespace MatrixHierarchies
         {
             switch (currentState)
             {
+                case GameState.TEST:
+                    break;
                 case GameState.START:
                     StartUpdate();
                     break;
@@ -114,6 +117,9 @@ namespace MatrixHierarchies
             ClearBackground(Color.WHITE);
             switch (currentState)
             {
+                case GameState.TEST:
+                    TestDraw();
+                    break;
                 case GameState.START:
                     StartDraw();
                     break;
@@ -126,6 +132,10 @@ namespace MatrixHierarchies
             }
             EndDrawing();
 
+        }
+
+        void TestDraw()
+        {
         }
 
         void StartDraw()

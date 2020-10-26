@@ -8,18 +8,21 @@ namespace MatrixHierarchies
         public float y;
         public float z;
 
+        public static Vector3 One
+        {
+            get => new Vector3(1, 1, 1);
+        }
+        public static Vector3 Zero
+        {
+            get => new Vector3();
+        }
+
         public Vector3(float x, float y, float z)
         {
             this.x = x;
             this.y = y;
             this.z = z;
         }
-        //public Vector3()
-        //{
-        //    x = 0;
-        //    y = 0;
-        //    z = 0;
-        //}
 
         public float Magnitude()
         {
