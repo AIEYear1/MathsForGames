@@ -18,6 +18,10 @@ namespace MatrixHierarchies
         public static Texture2D EnemyTankTexture;
         public static Texture2D EnemyTurretTexture;
 
+        public static Texture2D smokeTexture1;
+        public static Texture2D smokeTexture2;
+        public static Texture2D smokeTexture3;
+
         public static void Initialize()
         {
             BackgroundTexture = LoadTexture(@"Textures\Background.png");
@@ -32,6 +36,10 @@ namespace MatrixHierarchies
 
             EnemyTankTexture = LoadTexture(@"Textures\tankRed_outline.png");
             EnemyTurretTexture = LoadTexture(@"Textures\barrelRed.png");
+             
+            smokeTexture1 = LoadTexture(@"Textures\smokeWhite1.png");
+            smokeTexture2 = LoadTexture(@"Textures\smokeWhite2.png");
+            smokeTexture3 = LoadTexture(@"Textures\smokeWhite3.png");
         }
     }
 }

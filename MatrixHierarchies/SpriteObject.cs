@@ -6,7 +6,7 @@ namespace MatrixHierarchies
 {
     class SpriteObject : SceneObject
     {
-        Texture2D texture = new Texture2D();
+        public Texture2D texture = new Texture2D();
 
         public float Width
         {

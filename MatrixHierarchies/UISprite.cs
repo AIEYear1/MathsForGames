@@ -6,7 +6,7 @@ namespace MatrixHierarchies
     class UISprite
     {
         public Rectangle rectangle;
-        protected Color color;
+        public Color color;
 
         public Vector2 Position
         {

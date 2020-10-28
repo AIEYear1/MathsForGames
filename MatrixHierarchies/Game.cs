@@ -1,6 +1,7 @@
 ﻿using Raylib_cs;
 using System;
 using System.Diagnostics;
+using System.Net;
 using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
@@ -68,6 +69,7 @@ namespace MatrixHierarchies
             switch (currentState)
             {
                 case GameState.TEST:
+                    TestUpdate();
                     break;
                 case GameState.START:
                     StartUpdate();
@@ -79,6 +81,10 @@ namespace MatrixHierarchies
                     EndUpdate();
                     break;
             }
+        }
+
+        void TestUpdate()
+        {
         }
 
         void StartUpdate()
@@ -105,6 +111,7 @@ namespace MatrixHierarchies
             background.Update(deltaTime);
             EnemyManager.Update(deltaTime);
             PickupManager.Update(deltaTime);
+            SmokeManager.Update(deltaTime);
 
             CurCenter = Program.Center;
             lastTime = currentTime;
@@ -155,6 +162,7 @@ namespace MatrixHierarchies
 
             PickupManager.Draw();
             EnemyManager.Draw();
+            SmokeManager.Draw();
 
             player.Draw();
 

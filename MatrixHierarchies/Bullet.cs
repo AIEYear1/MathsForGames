@@ -57,6 +57,7 @@ namespace MatrixHierarchies
             if (Collider.Collision(collider, tank.collider))
             {
                 tank.TakeDamage();
+                SmokeManager.CreateSmoke(Position);
                 Destroy();
             }
         }
