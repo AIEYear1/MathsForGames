@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MatrixHierarchies
 {
@@ -33,7 +31,7 @@ namespace MatrixHierarchies
 
         public ColorXYZ(ColorRGB RGB)
         {
-            Vector3 rgb = new Vector3((float)RGB.R/255, (float)RGB.G/255, (float)RGB.B/255);
+            Vector3 rgb = new Vector3((float)RGB.R / 255, (float)RGB.G / 255, (float)RGB.B / 255);
 
             rgb.x = (float)((rgb.x <= 0.04045) ? rgb.x / 12.92 : Math.Pow((rgb.x + 0.16) / 1.16, 2.4f));
             rgb.y = (float)((rgb.y <= 0.04045) ? rgb.y / 12.92 : Math.Pow((rgb.y + 0.16) / 1.16, 2.4f));

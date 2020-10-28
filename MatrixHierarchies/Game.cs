@@ -1,7 +1,6 @@
 ﻿using Raylib_cs;
 using System;
 using System.Diagnostics;
-using System.Net;
 using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
@@ -15,7 +14,7 @@ namespace MatrixHierarchies
     }
     class Game
     {
-////////// TODO: Develop excuses to use new Color Lerping /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////// TODO: Develop excuses to use new Color Lerping /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ColorRGB.Lerp(Color, Color, increment);
 
         // Current state the game is in

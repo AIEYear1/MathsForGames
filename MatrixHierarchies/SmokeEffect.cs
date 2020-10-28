@@ -30,7 +30,7 @@ namespace MatrixHierarchies
 
             SetPosition(position.x, position.y);
 
-            renderCollider = new BoxCollider(Position, smokeTexture1.width, smokeTexture1.height, 0);
+            renderCollider = new BoxCollider(Position, smokeTexture3.width, smokeTexture3.height, 0);
         }
 
         public override void OnUpdate(float deltaTime)
@@ -70,7 +70,10 @@ namespace MatrixHierarchies
 
         public override void OnDraw()
         {
-            DrawTextureEx(curTexture, Position - smokeOffset, curRot, curScale, curColor);
+            if (Collider.Collision(renderCollider, (BoxCollider)Program.ScreenSpace))
+            {
+                DrawTextureEx(curTexture, Position - smokeOffset, curRot, curScale, curColor);
+            }
         }
     }
 }

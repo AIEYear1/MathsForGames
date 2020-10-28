@@ -36,7 +36,7 @@ namespace MatrixHierarchies
 
             EnemyTankTexture = LoadTexture(@"Textures\tankRed_outline.png");
             EnemyTurretTexture = LoadTexture(@"Textures\barrelRed.png");
-             
+
             smokeTexture1 = LoadTexture(@"Textures\smokeWhite1.png");
             smokeTexture2 = LoadTexture(@"Textures\smokeWhite2.png");
             smokeTexture3 = LoadTexture(@"Textures\smokeWhite3.png");

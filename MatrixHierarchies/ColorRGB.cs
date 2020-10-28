@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.VisualBasic.CompilerServices;
-using Raylib_cs;
+﻿using Raylib_cs;
+using System;
 namespace MatrixHierarchies
 {
     struct ColorRGB
@@ -47,9 +46,9 @@ namespace MatrixHierarchies
             rgb.y = (float)((rgb.y <= 0.0031308) ? 12.92 * rgb.y : Math.Pow(1.055 * rgb.y, 1 / 2.4f) - 0.055);
             rgb.z = (float)((rgb.z <= 0.0031308) ? 12.92 * rgb.z : Math.Pow(1.055 * rgb.z, 1 / 2.4f) - 0.055);
 
-            colour = (uint)(rgb.x*255) << 24;
-            colour += (uint)(rgb.y*255) << 16;
-            colour += (uint)(rgb.z*255) << 8;
+            colour = (uint)(rgb.x * 255) << 24;
+            colour += (uint)(rgb.y * 255) << 16;
+            colour += (uint)(rgb.z * 255) << 8;
             colour += (uint)255;
         }
 

@@ -162,7 +162,7 @@ namespace MatrixHierarchies
             //0,         0,        1
             Matrix3 tmp = new float[]
             {
-                (float)Math.Cos(rot), (float)Math.Sin(rot),  0,
+                (float)Math.Cos(rot),  (float)Math.Sin(rot), 0,
                 -(float)Math.Sin(rot), (float)Math.Cos(rot), 0,
                 0,                      0,                   1
             };
@@ -189,7 +189,7 @@ namespace MatrixHierarchies
             matrix = (this * (Matrix3)new float[]
             {
                 (float)Math.Cos(rot), 0, (float)-Math.Sin(rot),
-                0,              1, 0,
+                0,                    1, 0,
                 (float)Math.Sin(rot), 0, (float)Math.Cos(rot)
             }).matrix;
         }

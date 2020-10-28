@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MatrixHierarchies
 {
@@ -11,7 +8,7 @@ namespace MatrixHierarchies
 
         public static void Update(float deltaTime)
         {
-            for(int x = 0; x < smokes.Count; x++)
+            for (int x = 0; x < smokes.Count; x++)
             {
                 smokes[x].Update(deltaTime);
             }
