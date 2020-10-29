@@ -1,5 +1,5 @@
-﻿using System;
-using Raylib_cs;
+﻿using Raylib_cs;
+using System;
 namespace MatrixHierarchies
 {
     class AI : Tank

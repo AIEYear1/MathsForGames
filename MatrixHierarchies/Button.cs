@@ -1,5 +1,4 @@
 ﻿using Raylib_cs;
-using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
 {
@@ -9,7 +8,7 @@ namespace MatrixHierarchies
         protected string text;
         protected int fontSize;
         protected Color textColor, textHighlightColor, buttonHighlightColor;
-        
+
         protected Color curTextColor;
         protected Color curColor;
 

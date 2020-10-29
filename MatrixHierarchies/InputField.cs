@@ -21,7 +21,7 @@ namespace MatrixHierarchies
 
         // Whether the input field is taking player input or not
         bool isInputing = false;
-        
+
         public InputField(Vector2 position, float width, float height, Color buttonColor, Vector2 textPosition, string text, int fontSize, Color textColor, float dim, uint charLimit) : base(position, width, height, buttonColor, textPosition, text, fontSize, textColor, dim)
         {
             this.charLimit = charLimit;
@@ -37,7 +37,7 @@ namespace MatrixHierarchies
                 if (inputText.Length < charLimit && Utils.KeyboardInput(out string input))
                 {
                     inputText += input;
-                    if(inputText.Length >= charLimit)
+                    if (inputText.Length >= charLimit)
                     {
                         inputText = inputText.Substring(0, (int)charLimit);
                     }
@@ -50,7 +50,7 @@ namespace MatrixHierarchies
 
                 text = inputText;
 
-                if(IsKeyPressed(KeyboardKey.KEY_ENTER) || (!CheckCollisionPointRec(GetMousePosition(), rectangle) && IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)))
+                if (IsKeyPressed(KeyboardKey.KEY_ENTER) || (!CheckCollisionPointRec(GetMousePosition(), rectangle) && IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON)))
                 {
                     isInputing = false;
                     OutString = inputText;

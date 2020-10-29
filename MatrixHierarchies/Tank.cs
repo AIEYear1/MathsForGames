@@ -127,7 +127,7 @@ namespace MatrixHierarchies
             tankColor = Color.WHITE;
             if (!hurtTime.Check(false))
             {
-                if(hurtTime.Time / (hurtTime.delay / 2) < 1)
+                if (hurtTime.Time / (hurtTime.delay / 2) < 1)
                 {
                     tankColor = ColorRGB.Lerp(Color.WHITE, hurtColor, hurtTime.Time / (hurtTime.delay / 2));
                 }
