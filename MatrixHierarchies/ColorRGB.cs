@@ -60,6 +60,30 @@ namespace MatrixHierarchies
             return toReturn;
         }
 
+        public static ColorRGB operator +(ColorRGB lhs, float rhs)
+        {
+            lhs.R = (byte)MathF.Min(lhs.R + rhs, 255);
+            lhs.G = (byte)MathF.Min(lhs.G + rhs, 255);
+            lhs.B = (byte)MathF.Min(lhs.B + rhs, 255);
+            lhs.A = (byte)MathF.Min(lhs.A + rhs, 255);
+            return lhs;
+        }
+        public static ColorRGB operator -(ColorRGB lhs, float rhs)
+        {
+            lhs.R = (byte)MathF.Max(lhs.R - rhs, 0);
+            lhs.G = (byte)MathF.Max(lhs.G - rhs, 0);
+            lhs.B = (byte)MathF.Max(lhs.B - rhs, 0);
+            lhs.A = (byte)MathF.Max(lhs.A - rhs, 0);
+            return lhs;
+        }
+        public static ColorRGB operator +(float lhs, ColorRGB rhs)
+        {
+            rhs.R = (byte)MathF.Min(rhs.R + lhs, 255);
+            rhs.G = (byte)MathF.Min(rhs.G + lhs, 255);
+            rhs.B = (byte)MathF.Min(rhs.B + lhs, 255);
+            rhs.A = (byte)MathF.Min(rhs.A + lhs, 255);
+            return rhs;
+        }
         public static implicit operator Color(ColorRGB color)
         {
             return new Color(color.R, color.G, color.B, color.A);

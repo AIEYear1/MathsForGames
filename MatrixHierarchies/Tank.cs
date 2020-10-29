@@ -115,7 +115,7 @@ namespace MatrixHierarchies
             // Push enemies
             for (int x = 0; x < EnemyManager.curEnemies.Count; x++)
             {
-                Push(EnemyManager.curEnemies[x]);
+                EnemyManager.curEnemies[x].Push(this);
             }
 
             // Shift object back to simulate camera movement

@@ -84,7 +84,7 @@ namespace MatrixHierarchies
                 for (int y = 0; y < curEnemies.Count; y++)
                 {
                     if (x != y)
-                        curEnemies[x].Push(curEnemies[y]);
+                        curEnemies[y].Push(curEnemies[x]);
                 }
             }
         }

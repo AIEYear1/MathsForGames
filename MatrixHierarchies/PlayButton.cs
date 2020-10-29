@@ -8,12 +8,12 @@ namespace MatrixHierarchies
         Vector2 position;
         string text;
         int fontSize;
-        Color textColor;
+        Color textColor, textHighlightColor, buttonHighlightColor;
 
         Color curTextColor;
         Color curColor;
 
-        public PlayButton(Vector2 position, float width, float height, Color buttonColor, Vector2 textPosition, string text, int fontSize, Color textColor) : base(position, width, height, buttonColor)
+        public PlayButton(Vector2 position, float width, float height, Color buttonColor, Vector2 textPosition, string text, int fontSize, Color textColor, float dim) : base(position, width, height, buttonColor)
         {
             this.position = textPosition;
             this.text = text;
@@ -21,21 +21,16 @@ namespace MatrixHierarchies
             this.textColor = textColor;
             curColor = buttonColor;
             curTextColor = textColor;
+            textHighlightColor = (ColorRGB)textColor - dim;
+            buttonHighlightColor = (ColorRGB)buttonColor - dim;
         }
 
         public void Update()
         {
-            curColor = color;
-            curTextColor = textColor;
             if (CheckCollisionPointRec(GetMousePosition(), rectangle))
             {
-                curColor.r -= 11;
-                curColor.g -= 11;
-                curColor.b -= 11;
-
-                curTextColor.r -= 11;
-                curTextColor.g -= 11;
-                curTextColor.b -= 11;
+                curColor = buttonHighlightColor;
+                curTextColor = textHighlightColor;
 
                 if (IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
                 {
@@ -45,6 +40,9 @@ namespace MatrixHierarchies
 
                 return;
             }
+
+            curColor = color;
+            curTextColor = textColor;
         }
 
         public override void Draw()

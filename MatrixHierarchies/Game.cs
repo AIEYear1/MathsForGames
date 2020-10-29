@@ -14,7 +14,7 @@ namespace MatrixHierarchies
     }
     class Game
     {
-        ////////// TODO: Develop excuses to use new Color Lerping /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////// TODO: Develop excuses to use new Color Lerping /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // ColorRGB.Lerp(Color, Color, increment);
 
         // Current state the game is in
@@ -45,7 +45,7 @@ namespace MatrixHierarchies
         {
             // Start Objects
             playButton = new PlayButton(Program.Center - new Vector2(100, -100), 200, 100, Color.BLUE,
-                                               new Vector2(10, 20), "PLAY", 70, Color.SKYBLUE);
+                                               new Vector2(10, 20), "PLAY", 70, Color.SKYBLUE, 20);
 
             // Game Objects
             PreLoadedTextures.Initialize();
