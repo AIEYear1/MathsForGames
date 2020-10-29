@@ -22,6 +22,7 @@ namespace MatrixHierarchies
         public static Texture2D smokeTexture2;
         public static Texture2D smokeTexture3;
 
+
         public static void Initialize()
         {
             BackgroundTexture = LoadTexture(@"Textures\Background.png");

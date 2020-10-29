@@ -1,6 +1,7 @@
 ﻿using Raylib_cs;
 using System;
 using System.Diagnostics;
+using System.IO;
 using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
@@ -19,12 +20,14 @@ namespace MatrixHierarchies
 
         // Current state the game is in
         public static GameState currentState = GameState.START;
+        const string SaveName = "Highscore.save";
 
         #region Start
         PlayButton playButton;
+        string prevHighScore;
         #endregion
 
-        #region PLay
+        #region Play
         public static Vector2 CurCenter = Program.Center;
         public static int fps = 1;
 
@@ -40,12 +43,17 @@ namespace MatrixHierarchies
         float deltaTime = .005f;
         #endregion
 
+        #region End
+        InputField HighScoreName;
+        #endregion
+
         // Initialize all dependant variables
         public void Initialize()
         {
             // Start Objects
             playButton = new PlayButton(Program.Center - new Vector2(100, -100), 200, 100, Color.BLUE,
                                                new Vector2(10, 20), "PLAY", 70, Color.SKYBLUE, 20);
+            LoadHighScore();
 
             // Game Objects
             PreLoadedTextures.Initialize();
@@ -57,10 +65,46 @@ namespace MatrixHierarchies
             UI.Initialize();
             PickupManager.Initialize(player);
             EnemyManager.Initialize(player);
+
+            // End Objects
+            HighScoreName = new InputField(Program.Center - new Vector2(150, -160), 300, 120, Color.BLUE, new Vector2(30, 30), "NAME", 70, Color.SKYBLUE, 25, 5);
+        }
+        void LoadHighScore()
+        {
+            prevHighScore = "                   Highscore";
+
+            if (File.Exists(SaveName))
+            {
+                string[] saveDat = File.ReadAllText(SaveName).Split('\t');
+                prevHighScore += $": {saveDat[0]}\n" +
+                                  "Enemies defeated " + saveDat[1] + "\t:\tWaves completed " + saveDat[2];
+            }
         }
 
         public void ShutDown()
         {
+            if (!HighScoreName.HasInput)
+                return;
+
+            if (File.Exists(SaveName))
+            {
+                string[] prevData = File.ReadAllText(SaveName).Split('\t');
+                int highTest;
+
+                int.TryParse(prevData[2], out highTest);
+
+                if (highTest > EnemyManager.waveNum)
+                    return;
+
+                int.TryParse(prevData[1], out highTest);
+
+                if (highTest >= Tank.enemiesDefeated)
+                    return;
+
+                File.Delete(SaveName);
+            }
+
+            File.AppendAllText(SaveName, $"{HighScoreName.OutString}\t{Tank.enemiesDefeated.ToString("000")}\t{EnemyManager.waveNum.ToString("00")}");
         }
 
         public void Update()
@@ -118,6 +162,7 @@ namespace MatrixHierarchies
 
         void EndUpdate()
         {
+            HighScoreName.Update();
         }
 
         public void Draw()
@@ -154,6 +199,7 @@ namespace MatrixHierarchies
                      "Blue line points to Ammo, Pink line to Medkits, and Red to Enemies",
                      (int)(Program.ScreenSpace.width / 2) - 400, (int)(Program.ScreenSpace.width / 2) - 150, 25, Color.BLUE);
             playButton.Draw();
+            DrawText(prevHighScore, (int)Program.Center.x - 350, (int)Program.Center.y + 300, 30, Color.BLUE);
         }
         void GameDraw()
         {
@@ -170,8 +216,9 @@ namespace MatrixHierarchies
         void EndDraw()
         {
             DrawText("Game Over", (int)(Program.ScreenSpace.width / 2) - 190, 110, 70, Color.BLUE);
-            DrawText("Enemies defeated " + Tank.enemiesDefeated.ToString("00") + "\t:\tWaves completed " + EnemyManager.waveNum.ToString("00"),
-                     (int)(Program.ScreenSpace.width / 2) - 340, (int)(Program.ScreenSpace.width / 2) - 65, 30, Color.BLUE);
+            DrawText("Enemies defeated " + Tank.enemiesDefeated.ToString("000") + "\t:\tWaves completed " + EnemyManager.waveNum.ToString("00"),
+                     (int)(Program.ScreenSpace.width / 2) - 350, (int)(Program.ScreenSpace.width / 2) - 65, 30, Color.BLUE);
+            HighScoreName.Draw();
         }
     }
 }

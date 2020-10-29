@@ -1,4 +1,5 @@
 ﻿using System;
+using Raylib_cs;
 namespace MatrixHierarchies
 {
     class AI : Tank
@@ -53,6 +54,20 @@ namespace MatrixHierarchies
 
                 bullets[x].CheckCollision(player);
             }
+            tankColor = Color.WHITE;
+            if (!hurtTime.Check(false))
+            {
+                if (hurtTime.Time / (hurtTime.delay / 2) < 1)
+                {
+                    tankColor = ColorRGB.Lerp(Color.WHITE, hurtColor, hurtTime.Time / (hurtTime.delay / 2));
+                }
+                else
+                {
+                    tankColor = ColorRGB.Lerp(hurtColor, Color.WHITE, (hurtTime.Time - (hurtTime.delay / 2)) / ((hurtTime.delay / 2)));
+                }
+            }
+            tankSprite.spriteColor = tankColor;
+            turretSprite.spriteColor = tankColor;
 
 
             Vector2 tmpVector = Program.Center - Game.CurCenter;
@@ -70,6 +85,7 @@ namespace MatrixHierarchies
 
         public override void TakeDamage()
         {
+            hurtTime.Reset();
             health.CountByValue(1);
             if (health.IsComplete(false))
             {

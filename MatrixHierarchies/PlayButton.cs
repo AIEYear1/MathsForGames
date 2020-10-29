@@ -3,29 +3,13 @@ using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
 {
-    class PlayButton : UISprite
+    class PlayButton : Button
     {
-        Vector2 position;
-        string text;
-        int fontSize;
-        Color textColor, textHighlightColor, buttonHighlightColor;
-
-        Color curTextColor;
-        Color curColor;
-
-        public PlayButton(Vector2 position, float width, float height, Color buttonColor, Vector2 textPosition, string text, int fontSize, Color textColor, float dim) : base(position, width, height, buttonColor)
+        public PlayButton(Vector2 position, float width, float height, Color buttonColor, Vector2 textPosition, string text, int fontSize, Color textColor, float dim) : base(position, width, height, buttonColor, textPosition, text, fontSize, textColor, dim)
         {
-            this.position = textPosition;
-            this.text = text;
-            this.fontSize = fontSize;
-            this.textColor = textColor;
-            curColor = buttonColor;
-            curTextColor = textColor;
-            textHighlightColor = (ColorRGB)textColor - dim;
-            buttonHighlightColor = (ColorRGB)buttonColor - dim;
         }
 
-        public void Update()
+        public override void Update()
         {
             if (CheckCollisionPointRec(GetMousePosition(), rectangle))
             {

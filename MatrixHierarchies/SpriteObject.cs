@@ -7,6 +7,7 @@ namespace MatrixHierarchies
     class SpriteObject : SceneObject
     {
         public Texture2D texture = new Texture2D();
+        public Color spriteColor = Color.WHITE;
 
         public float Width
         {
@@ -50,7 +51,7 @@ namespace MatrixHierarchies
 
             if (Collider.Collision(collider, (BoxCollider)Program.ScreenSpace))
             {
-                DrawTextureEx(texture, Position, rotation * (180.0f / MathF.PI), 1, Color.WHITE);
+                DrawTextureEx(texture, Position, rotation * (180.0f / MathF.PI), 1, spriteColor);
             }
         }
     }

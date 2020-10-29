@@ -67,5 +67,22 @@ namespace MatrixHierarchies
                     return 0;
             }
         }
+
+        public static bool KeyboardInput(out string val)
+        {
+            val = "";
+            int key = GetKeyPressed();
+
+            while (key > 0)
+            {
+                if (key >= 32 && key <= 125)
+                {
+                    val += (char)key;
+                }
+                key = GetKeyPressed();
+            }
+
+            return val != "";
+        }
     }
 }

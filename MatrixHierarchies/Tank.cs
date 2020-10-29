@@ -24,6 +24,10 @@ namespace MatrixHierarchies
         protected readonly float speed = 350, rotationSpeed = 120 * (MathF.PI / 180), turretRotSpeed = 80 * (MathF.PI / 180);
         protected float curSpeed = 0, curRot = 0, curTurretRot = 0;
 
+        protected Color tankColor = Color.WHITE;
+        protected Color hurtColor = new Color((byte)255, (byte)187, (byte)176, (byte)255);
+        protected Timer hurtTime = new Timer(.25f);
+
         public Tank(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position, float hp)
         {
             tankSprite.Load(tankSpriteFileName);
@@ -42,6 +46,8 @@ namespace MatrixHierarchies
 
             attackDelay.Reset(attackDelay.delay);
             health = new Timer(hp);
+
+            hurtTime.Reset(hurtTime.delay);
         }
         public Tank(float rotation, Vector2 position, float hp)
         {
@@ -118,6 +124,21 @@ namespace MatrixHierarchies
                 EnemyManager.curEnemies[x].Push(this);
             }
 
+            tankColor = Color.WHITE;
+            if (!hurtTime.Check(false))
+            {
+                if(hurtTime.Time / (hurtTime.delay / 2) < 1)
+                {
+                    tankColor = ColorRGB.Lerp(Color.WHITE, hurtColor, hurtTime.Time / (hurtTime.delay / 2));
+                }
+                else
+                {
+                    tankColor = ColorRGB.Lerp(hurtColor, Color.WHITE, (hurtTime.Time - (hurtTime.delay / 2)) / ((hurtTime.delay / 2)));
+                }
+            }
+            tankSprite.spriteColor = tankColor;
+            turretSprite.spriteColor = tankColor;
+
             // Shift object back to simulate camera movement
             base.OnUpdate(deltaTime);
         }
@@ -132,6 +153,7 @@ namespace MatrixHierarchies
 
         public virtual void TakeDamage()
         {
+            hurtTime.Reset();
             health.CountByValue(1);
             if (health.IsComplete(false))
             {
