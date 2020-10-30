@@ -114,6 +114,7 @@ namespace MatrixHierarchies
             waveNum++;
             totalEnemiesForWave = currentNumberOfEnemies;
 
+            // Adding enemies to subwaves
             Wave.Add(new SubWave(waveNum, 0f, 0.5f, 6 + (int)(2.0f * (waveNum - 1))));
             if (waveNum > 6)
                 for (int i = 0; i < waveNum / 6; i++)
@@ -123,8 +124,9 @@ namespace MatrixHierarchies
                     Wave.Add(new SubWave(waveNum, (i * 3) + 3, 1f, 1 + (int)(waveNum / 3)));
             if (waveNum > 24)
                 for (int i = 0; i < (waveNum / 6) - 2; i++)
-                    Wave.Add(new SubWave(waveNum, (i * 3) + 3, 1f, 1 + (int)(waveNum / 3)));
+                    Wave.Add(new SubWave(waveNum, (i * 3) + 4, 1f, 1 + (int)(waveNum / 3)));
 
+            // Preping for end of wave
             foreach (SubWave sw in Wave)
             {
                 sw.ResetTimestamp(); //We need this so that the timestamps are correct
@@ -141,6 +143,7 @@ namespace MatrixHierarchies
         /// </summary>
         static void Play()
         {
+            // Spawns the enmy when it is time
             for (int i = 0; i < Wave.Count; i++)
             {
                 if (Wave[i].IsTime())
@@ -148,16 +151,17 @@ namespace MatrixHierarchies
                     if (Wave[i].Spawn())
                     {
                         curEnemies.Add(new AI(-90 * (float)(MathF.PI / 180.0f), spawnBounds.PointInBounds(), 3, 1000, 300, player));
-                        nextEnemies.RemoveAt(0); //Lambdas yay
+                        nextEnemies.RemoveAt(0); // not the original code but no enemy should need to apper before the first so this will do
                     }
                 }
-                if (Wave[i].IsDone())
+                if (Wave[i].IsDone()) // Once all enemies in the subwave have spawned
                     Wave.Remove(Wave[i]);
             }
 
+            // Once all waves have spawned all their enemies
             if (Wave.Count == 0)
             {
-                Console.WriteLine("wave finished"); //Signal the end of the wave
+                Console.WriteLine("wave finished"); //Signal the end of the wave spawning
                 curStage = SpawnStage.WAITFORWAVEEND;
 
                 nextEnemies.Clear();

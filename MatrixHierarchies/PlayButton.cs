@@ -18,7 +18,7 @@ namespace MatrixHierarchies
 
                 if (IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
                 {
-                    Game.currentState = GameState.PLAY;
+                    Game.currentStage = GameStage.PLAY;
                     EnemyManager.Paused = false;
                 }
 

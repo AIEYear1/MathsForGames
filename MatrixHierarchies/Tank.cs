@@ -157,7 +157,7 @@ namespace MatrixHierarchies
             health.CountByValue(1);
             if (health.IsComplete(false))
             {
-                Game.currentState = GameState.END;
+                Game.currentStage = GameStage.END;
                 EnemyManager.Paused = true;
             }
             UI.playerHealth.SetHealth(health.TimeRemaining / health.delay);

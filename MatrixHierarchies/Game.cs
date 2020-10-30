@@ -6,7 +6,7 @@ using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
 {
-    public enum GameState
+    public enum GameStage
     {
         START,
         PLAY,
@@ -19,7 +19,8 @@ namespace MatrixHierarchies
         // ColorRGB.Lerp(Color, Color, increment);
 
         // Current state the game is in
-        public static GameState currentState = GameState.START;
+        public static GameStage currentStage = GameStage.START;
+        // File name for saving and loading Highscore
         const string SaveName = "Highscore.save";
 
         #region Start
@@ -51,8 +52,8 @@ namespace MatrixHierarchies
         public void Initialize()
         {
             // Start Objects
-            playButton = new PlayButton(Program.Center - new Vector2(100, -100), 200, 100, Color.BLUE,
-                                               new Vector2(10, 20), "PLAY", 70, Color.SKYBLUE, 20);
+            playButton = new PlayButton(Program.Center - new Vector2(100, -100), 200, 100, Color.BLUE, 
+                new Vector2(10, 20), "PLAY", 70, Color.SKYBLUE, 20);
             LoadHighScore();
 
             // Game Objects
@@ -67,7 +68,8 @@ namespace MatrixHierarchies
             EnemyManager.Initialize(player);
 
             // End Objects
-            HighScoreName = new InputField(Program.Center - new Vector2(150, -160), 300, 120, Color.BLUE, new Vector2(30, 30), "NAME", 70, Color.SKYBLUE, 25, 5);
+            HighScoreName = new InputField(Program.Center - new Vector2(150, -160), 300, 120, Color.BLUE, 
+                new Vector2(30, 30), "NAME", 70, Color.SKYBLUE, 25, 5);
         }
         void LoadHighScore()
         {
@@ -107,20 +109,21 @@ namespace MatrixHierarchies
             File.AppendAllText(SaveName, $"{HighScoreName.OutString}\t{Tank.enemiesDefeated.ToString("000")}\t{EnemyManager.waveNum.ToString("00")}");
         }
 
+        #region Update
         public void Update()
         {
-            switch (currentState)
+            switch (currentStage)
             {
-                case GameState.TEST:
+                case GameStage.TEST:
                     TestUpdate();
                     break;
-                case GameState.START:
+                case GameStage.START:
                     StartUpdate();
                     break;
-                case GameState.PLAY:
+                case GameStage.PLAY:
                     GameUpdate();
                     break;
-                case GameState.END:
+                case GameStage.END:
                     EndUpdate();
                     break;
             }
@@ -164,23 +167,25 @@ namespace MatrixHierarchies
         {
             HighScoreName.Update();
         }
+        #endregion
 
+        #region Draw
         public void Draw()
         {
             BeginDrawing();
             ClearBackground(Color.WHITE);
-            switch (currentState)
+            switch (currentStage)
             {
-                case GameState.TEST:
+                case GameStage.TEST:
                     TestDraw();
                     break;
-                case GameState.START:
+                case GameStage.START:
                     StartDraw();
                     break;
-                case GameState.PLAY:
+                case GameStage.PLAY:
                     GameDraw();
                     break;
-                case GameState.END:
+                case GameStage.END:
                     EndDraw();
                     break;
             }
@@ -220,5 +225,6 @@ namespace MatrixHierarchies
                      (int)(Program.ScreenSpace.width / 2) - 350, (int)(Program.ScreenSpace.width / 2) - 65, 30, Color.BLUE);
             HighScoreName.Draw();
         }
+        #endregion
     }
 }
