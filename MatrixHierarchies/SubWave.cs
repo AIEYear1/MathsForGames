@@ -47,7 +47,7 @@ namespace MatrixHierarchies
         /// <returns>Returns true when next Subwave is ready to start spawning</returns>
         public bool IsTime()
         {
-            if (isStarted) 
+            if (isStarted)
                 return true;
 
             if (timestamp + (time) < (float)GetTime())
@@ -56,7 +56,7 @@ namespace MatrixHierarchies
                 timestamp = (float)GetTime() - spacing; //Minus spacing so they spawn right away instead of with a delay
                 return true;
             }
-            else 
+            else
                 return false;
         }
 

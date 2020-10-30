@@ -52,7 +52,7 @@ namespace MatrixHierarchies
         public void Initialize()
         {
             // Start Objects
-            playButton = new PlayButton(Program.Center - new Vector2(100, -100), 200, 100, Color.BLUE, 
+            playButton = new PlayButton(Program.Center - new Vector2(100, -100), 200, 100, Color.BLUE,
                 new Vector2(10, 20), "PLAY", 70, Color.SKYBLUE, 20);
             LoadHighScore();
 
@@ -68,7 +68,7 @@ namespace MatrixHierarchies
             EnemyManager.Initialize(player);
 
             // End Objects
-            HighScoreName = new InputField(Program.Center - new Vector2(150, -160), 300, 120, Color.BLUE, 
+            HighScoreName = new InputField(Program.Center - new Vector2(150, -160), 300, 120, Color.BLUE,
                 new Vector2(30, 30), "NAME", 70, Color.SKYBLUE, 25, 5);
         }
         void LoadHighScore()
