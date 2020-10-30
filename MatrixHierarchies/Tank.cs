@@ -17,7 +17,6 @@ namespace MatrixHierarchies
         public Timer health;
 
         protected SpriteObject tankSprite = new SpriteObject();
-
         protected SpriteObject turretSprite = new SpriteObject();
         protected SceneObject turretObject = new SceneObject();
 
@@ -25,7 +24,7 @@ namespace MatrixHierarchies
         protected float curSpeed = 0, curRot = 0, curTurretRot = 0;
 
         protected Color tankColor = Color.WHITE;
-        protected Color hurtColor = new Color((byte)255, (byte)187, (byte)176, (byte)255);
+        protected readonly Color hurtColor = new Color((byte)255, (byte)187, (byte)176, (byte)255);
         protected Timer hurtTime = new Timer(.25f);
 
         public Tank(string tankSpriteFileName, string turretSpriteFileName, float rotation, Vector2 position, float hp)
@@ -72,9 +71,7 @@ namespace MatrixHierarchies
         public override void OnUpdate(float deltaTime)
         {
             RotateBody(deltaTime);
-
             MoveBody(deltaTime);
-
             RotateTurret(deltaTime);
             Game.CurCenter = Position;
 
@@ -118,20 +115,21 @@ namespace MatrixHierarchies
                 }
             }
 
-            // Push enemies
+            // Push player back if they run into enemies
             for (int x = 0; x < EnemyManager.curEnemies.Count; x++)
             {
                 EnemyManager.curEnemies[x].Push(this);
             }
 
+            // Alter color when player gets hit
             tankColor = Color.WHITE;
             if (!hurtTime.Check(false))
             {
-                if (hurtTime.Time / (hurtTime.delay / 2) < 1)
+                if (hurtTime.Time / (hurtTime.delay / 2) < 1) // Become more red until halfway through timer
                 {
                     tankColor = ColorRGB.Lerp(Color.WHITE, hurtColor, hurtTime.Time / (hurtTime.delay / 2));
                 }
-                else
+                else // Become less red from halfway through timer to completion
                 {
                     tankColor = ColorRGB.Lerp(hurtColor, Color.WHITE, (hurtTime.Time - (hurtTime.delay / 2)) / ((hurtTime.delay / 2)));
                 }
@@ -155,14 +153,18 @@ namespace MatrixHierarchies
         {
             hurtTime.Reset();
             health.CountByValue(1);
-            if (health.IsComplete(false))
+            if (health.IsComplete(false)) // Player Death
             {
                 Game.currentStage = GameStage.END;
                 EnemyManager.Paused = true;
             }
+            // Edit player health bar to match player's current health
             UI.playerHealth.SetHealth(health.TimeRemaining / health.delay);
         }
 
+        /// <summary>
+        /// Move the player forwards and/or backwards
+        /// </summary
         void MoveBody(float deltaTime)
         {
             curSpeed = speed * Utils.GetAxis("Vertical", 5);
@@ -174,6 +176,10 @@ namespace MatrixHierarchies
             }
         }
 
+        /// <summary>
+        /// shove one tank away from the other
+        /// </summary>
+        /// <param name="toPush">tank to be pushed back</param>
         public void Push(Tank toPush)
         {
             float pusherRad = MathF.Sqrt(MathF.Pow(tankSprite.Width / 2, 2) + MathF.Pow(tankSprite.Height / 2, 2));
@@ -187,6 +193,10 @@ namespace MatrixHierarchies
                 toPush.Translate(push.x, push.y);
             }
         }
+
+        /// <summary>
+        /// Rotate the body either left or right
+        /// </summary>
         void RotateBody(float deltaTime)
         {
             curRot = rotationSpeed * Utils.GetAxis("Horizontal", 3);
@@ -198,6 +208,9 @@ namespace MatrixHierarchies
             }
         }
 
+        /// <summary>
+        /// Rotate the turret either left or right
+        /// </summary>
         void RotateTurret(float deltaTime)
         {
             curTurretRot = turretRotSpeed * Utils.GetAxis("Turret", 9f);

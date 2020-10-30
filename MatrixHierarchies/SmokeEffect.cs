@@ -10,7 +10,7 @@ namespace MatrixHierarchies
         Vector2 smokeOffset;
         Texture2D curTexture, smokeTexture1, smokeTexture2, smokeTexture3;
 
-        Timer timerHell;
+        Timer lifeTime;
 
         Color curColor, fireColor = new Color(226, 88, 34, 220), smokeColor = new Color(94, 79, 68, 0);
         float curScale = .5f;
@@ -18,7 +18,7 @@ namespace MatrixHierarchies
 
         public SmokeEffect(Vector2 position, float lifeTime)
         {
-            timerHell = new Timer(lifeTime);
+            this.lifeTime = new Timer(lifeTime);
 
             smokeTexture1 = PreLoadedTextures.smokeTexture1;
             smokeTexture2 = PreLoadedTextures.smokeTexture2;
@@ -35,19 +35,20 @@ namespace MatrixHierarchies
 
         public override void OnUpdate(float deltaTime)
         {
-            if (!timerHell.Check(false))
+            // Lerp everything off life time
+            if (!lifeTime.Check(false))
             {
-                curColor = ColorRGB.Lerp(fireColor, smokeColor, timerHell.PercentComplete);
-                curScale = Utils.Lerp(0.2f, 1, timerHell.PercentComplete);
-                curRot = Utils.Lerp(0, 90, timerHell.PercentComplete);
+                curColor = ColorRGB.Lerp(fireColor, smokeColor, lifeTime.PercentComplete);
+                curScale = Utils.Lerp(0.2f, 1, lifeTime.PercentComplete);
+                curRot = Utils.Lerp(0, 90, lifeTime.PercentComplete);
 
-                if (timerHell.PercentComplete >= 2f / 3f)
+                if (lifeTime.PercentComplete >= 2f / 3f)
                 {
                     curTexture = smokeTexture3;
                     smokeOffset.x = smokeTexture3.width / 2;
                     smokeOffset.y = smokeTexture3.height / 2;
                 }
-                else if (timerHell.PercentComplete >= 1f / 3f)
+                else if (lifeTime.PercentComplete >= 1f / 3f)
                 {
                     curTexture = smokeTexture2;
                     smokeOffset.x = smokeTexture2.width / 2;

@@ -26,8 +26,12 @@ namespace MatrixHierarchies
         public abstract void Debug();
         public abstract void Rotate(float radians);
 
+        /// <summary>
+        /// Ambiguous collision
+        /// </summary>
         public static bool Collision(Collider lhs, Collider rhs)
         {
+            // Determines what the collider types are and determine collision accordingly
             if (lhs is BoxCollider lBox)
             {
                 if (rhs is BoxCollider rBox)
@@ -48,12 +52,14 @@ namespace MatrixHierarchies
 
         public static bool BoxCollision(BoxCollider lhs, BoxCollider rhs)
         {
+            // Circle collision to ensure the boxes are close enough to consider colliding
             if (lhs.position.Distance(rhs.position) >
                (lhs.TopRightPoint - lhs.position).Magnitude() + (rhs.TopRightPoint - rhs.position).Magnitude())
             {
                 return false;
             }
 
+            // The Axes for projecting
             Vector2[] axes = new Vector2[]
             {
                 lhs.TopRightPoint - lhs.TopLeftPoint,
@@ -65,6 +71,8 @@ namespace MatrixHierarchies
             for (int x = 0; x < 4; x++)
             {
                 Vector2 axis = axes[x];
+
+                // Projected vectors of the lhs Box
                 float[] lhsProjected = new float[]
                 {
                     ((lhs.TopLeftPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
@@ -72,6 +80,7 @@ namespace MatrixHierarchies
                     ((lhs.BottomLeftPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
                     ((lhs.BottomRightPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
                 };
+                // Projected vectors of the lhs Box
                 float[] rhsProjected = new float[]
                 {
                     ((rhs.TopLeftPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
@@ -80,8 +89,10 @@ namespace MatrixHierarchies
                     ((rhs.BottomRightPoint.Dot(axis) / axis.MagnitudeSqr()) * axis).Dot(axis),
                 };
 
+                // Checks to determine if there is no overlap
                 if (rhsProjected.Min() > lhsProjected.Max() || rhsProjected.Max() < lhsProjected.Min())
                 {
+                    // There is no overlap
                     return false;
                 }
             }

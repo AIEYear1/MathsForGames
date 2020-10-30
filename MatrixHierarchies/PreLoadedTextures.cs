@@ -7,17 +7,22 @@ namespace MatrixHierarchies
     {
         public static Texture2D BackgroundTexture;
 
+        // Bullet Textures
         public static Texture2D PlayerBulletTexture;
         public static Texture2D EnemyBulletTexture;
 
+        // Bullet Texture for UI
         public static Texture2D AmmoUITexture;
 
+        // Pickup Textures
         public static Texture2D AmmoPickupTexture;
         public static Texture2D HealthPickupTexture;
 
+        // Enemy tank textures
         public static Texture2D EnemyTankTexture;
         public static Texture2D EnemyTurretTexture;
 
+        // Smoke Textures for Particle effect
         public static Texture2D smokeTexture1;
         public static Texture2D smokeTexture2;
         public static Texture2D smokeTexture3;

@@ -4,49 +4,64 @@ using static Raylib_cs.Raylib;
 
 namespace MatrixHierarchies
 {
-    public enum SpawnStage
-    {
-        WAITFORWAVEEND,
-        PREPAREWAVE,
-        SPAWNENEMIES
-    }
 
     static class EnemyManager
     {
+        // Spawn enums
+        public enum SpawnStage
+        {
+            WAITFORWAVEEND,
+            PREPAREWAVE,
+            SPAWNENEMIES
+        }
+
+        // Enemies currently in the scene
         public static List<AI> curEnemies = new List<AI>();
         static readonly Bounds spawnBounds = new Bounds(Program.Center, 10000, 1000);
 
+        // Not 100% certain this is necessary but better to keep it in
         public static bool Paused = true;
-        public static List<float> nextEnemies = new List<float>();
 
         public static SpawnStage curStage = SpawnStage.WAITFORWAVEEND;
 
         public static int waveNum, totalEnemiesForWave, currentNumberOfEnemies;
 
+        // For Radar
         public static Vector2 nearestEnemy = Program.Center;
 
         static List<SubWave> Wave = new List<SubWave>();
 
+        // used For pause mechanic
         static float pauseTime = 0;
         static bool gotTimeAtPause = false;
+
+        // "Grace" period at the start of each wave
         static Timer waitTimer;
 
+        // Player to attack
         static Tank player;
 
+        /// <summary>
+        /// Initializes the enemy manager
+        /// </summary>
+        /// <param name="tank">Thing for the AI to attack</param>
         public static void Initialize(Tank tank)
         {
             waitTimer = new Timer(10);
             player = tank;
         }
 
+        /// <summary>
+        /// Manages all the Ai and their spawning
+        /// </summary>
         public static void Update(float deltaTime)
         {
+            // Pause stuff for timing
             if (Paused && !gotTimeAtPause)
             {
                 pauseTime = (float)GetTime();
                 gotTimeAtPause = true;
             }
-
             if (!Paused && gotTimeAtPause)
             {
                 pauseTime = (float)GetTime() - pauseTime;
@@ -62,6 +77,7 @@ namespace MatrixHierarchies
             if (Paused)
                 return;
 
+            // Spawning
             if (curStage == SpawnStage.WAITFORWAVEEND)
                 Wait();
             else if (curStage == SpawnStage.PREPAREWAVE)
@@ -69,6 +85,7 @@ namespace MatrixHierarchies
             else if (curStage == SpawnStage.SPAWNENEMIES)
                 Play();
 
+            // Update enemies
             float distFromEnemy = float.MaxValue;
             for (int x = 0; x < curEnemies.Count; x++)
             {
@@ -89,6 +106,9 @@ namespace MatrixHierarchies
             }
         }
 
+        /// <summary>
+        /// Draws the enmies
+        /// </summary>
         public static void Draw()
         {
             for (int x = 0; x < curEnemies.Count; x++)
@@ -131,7 +151,6 @@ namespace MatrixHierarchies
             {
                 sw.ResetTimestamp(); //We need this so that the timestamps are correct
                 totalEnemiesForWave += sw.amount;
-                nextEnemies.AddRange(sw.GetEnemies());
             }
 
             currentNumberOfEnemies = totalEnemiesForWave;
@@ -151,7 +170,6 @@ namespace MatrixHierarchies
                     if (Wave[i].Spawn())
                     {
                         curEnemies.Add(new AI(-90 * (float)(MathF.PI / 180.0f), spawnBounds.PointInBounds(), 3, 1000, 300, player));
-                        nextEnemies.RemoveAt(0); // not the original code but no enemy should need to apper before the first so this will do
                     }
                 }
                 if (Wave[i].IsDone()) // Once all enemies in the subwave have spawned
@@ -161,10 +179,8 @@ namespace MatrixHierarchies
             // Once all waves have spawned all their enemies
             if (Wave.Count == 0)
             {
-                Console.WriteLine("wave finished"); //Signal the end of the wave spawning
+                Console.WriteLine("spawning finished"); //Signal the end of the wave spawning
                 curStage = SpawnStage.WAITFORWAVEEND;
-
-                nextEnemies.Clear();
             }
         }
 

@@ -76,6 +76,13 @@ namespace MatrixHierarchies
             float toReturn = (float)Math.Acos(Dot(vector) / (Magnitude() * vector.Magnitude()));
             return toReturn * (float)(180 / Math.PI);
         }
+        public static Vector3 ClampBox(Vector3 point, Vector3 minPoint, Vector3 maxPoint)
+        {
+            point.x = (point.x > maxPoint.x) ? maxPoint.x : (point.x < minPoint.x) ? minPoint.x : point.x;
+            point.y = (point.y > maxPoint.y) ? maxPoint.y : (point.y < minPoint.y) ? minPoint.y : point.y;
+            point.z = (point.z > maxPoint.z) ? maxPoint.z : (point.z < minPoint.z) ? minPoint.z : point.z;
+            return point;
+        }
 
         public static Vector3 operator +(Vector3 lhs, Vector3 rhs)
         {

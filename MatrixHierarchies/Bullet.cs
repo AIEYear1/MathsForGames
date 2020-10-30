@@ -46,12 +46,6 @@ namespace MatrixHierarchies
             collider.SetPosition(Position);
         }
 
-        //public override void OnDraw()
-        //{
-        //    DrawCircleV(Position, (bulletSprite.Width / 2) + (bulletSprite.Height / 2), Color.MAROON);
-        //    DrawCircleV(bulletSprite.Position, 5, Color.MAGENTA);
-        //}
-
         public void CheckCollision(Tank tank)
         {
             if (Collider.Collision(collider, tank.collider))

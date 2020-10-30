@@ -105,9 +105,11 @@ namespace Binary
         static long BinToDec(string bin)
         {
             long toReturn = 0;
+            bool isNeg = false;
 
             if(bin[0] == '1')
             {
+                isNeg = true;
                 bin = BinFromNeg(bin);
             }
 
@@ -116,7 +118,7 @@ namespace Binary
                 uint.TryParse(bin[x].ToString(), out uint bit);
                 toReturn += bit << bin.Length - 1 - x;
             }
-            return toReturn;
+            return (isNeg) ? -toReturn : toReturn;
         }
 
         static string BinToNeg(string bin)

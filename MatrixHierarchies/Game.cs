@@ -85,9 +85,11 @@ namespace MatrixHierarchies
 
         public void ShutDown()
         {
+            // If no name don't attempt to save the score
             if (!HighScoreName.HasInput)
                 return;
 
+            // If there is a highscore
             if (File.Exists(SaveName))
             {
                 string[] prevData = File.ReadAllText(SaveName).Split('\t');
@@ -106,6 +108,7 @@ namespace MatrixHierarchies
                 File.Delete(SaveName);
             }
 
+            // If the current score is the best score save it
             File.AppendAllText(SaveName, $"{HighScoreName.OutString}\t{Tank.enemiesDefeated.ToString("000")}\t{EnemyManager.waveNum.ToString("00")}");
         }
 

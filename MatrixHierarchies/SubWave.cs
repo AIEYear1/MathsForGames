@@ -28,7 +28,7 @@ namespace MatrixHierarchies
         /// <summary>
         /// Spawn the next enemy
         /// </summary>
-        /// <returns>Returns the enemy to spawn</returns>
+        /// <returns>Returns true when its time to spawn another enemy</returns>
         public bool Spawn()
         {
             if (amount == 0) return false;
@@ -47,14 +47,17 @@ namespace MatrixHierarchies
         /// <returns>Returns true when next Subwave is ready to start spawning</returns>
         public bool IsTime()
         {
-            if (isStarted) return true;
+            if (isStarted) 
+                return true;
+
             if (timestamp + (time) < (float)GetTime())
             {
                 isStarted = true;
                 timestamp = (float)GetTime() - spacing; //Minus spacing so they spawn right away instead of with a delay
                 return true;
             }
-            else return false;
+            else 
+                return false;
         }
 
         /// <summary>

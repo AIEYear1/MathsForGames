@@ -41,7 +41,7 @@ namespace MatrixHierarchies
                                                   0.3575761f, 0.7151522f, 0.1191920f,
                                                   0.1804375f, 0.0721750f, 0.9503041f);
 
-            colorV = transformMatrix * rgb;
+            colorV = Vector3.ClampBox(transformMatrix * rgb, Vector3.Zero, Vector3.One);
         }
         public ColorXYZ(ColorLUV luv)
         {
@@ -49,6 +49,8 @@ namespace MatrixHierarchies
             float k = 24389.0f / 27.0f;
 
             colorV.y = (luv.L > k * e) ? MathF.Pow((luv.L + 16) / 116, 3) : luv.L / k;
+            colorV.y = MathF.Max(colorV.y, 0);
+            colorV.y = MathF.Min(colorV.y, 1);
 
             float u0 = (4 * ColorXYZ.White.X) / (ColorXYZ.White.X + (15 * ColorXYZ.White.Y) + (3 * ColorXYZ.White.Z));
             float v0 = (9 * ColorXYZ.White.Y) / (ColorXYZ.White.X + (15 * ColorXYZ.White.Y) + (3 * ColorXYZ.White.Z));
@@ -59,7 +61,12 @@ namespace MatrixHierarchies
             double d = colorV.y * (((39.0 * luv.L) / (luv.v + (13.0 * luv.L * v0))) - 5);
 
             colorV.x = (float)((d - b) / (a - c));
+            colorV.x = MathF.Max(colorV.x, 0);
+            colorV.x = MathF.Min(colorV.x, 1);
+
             colorV.z = (float)((colorV.x * a) + b);
+            colorV.z = MathF.Max(colorV.z, 0);
+            colorV.z = MathF.Min(colorV.z, 1);
         }
 
 

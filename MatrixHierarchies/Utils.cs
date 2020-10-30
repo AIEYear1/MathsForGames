@@ -68,6 +68,11 @@ namespace MatrixHierarchies
             }
         }
 
+        /// <summary>
+        /// gets input from the keyboard
+        /// </summary>
+        /// <param name="val">keys pressed if any</param>
+        /// <returns>Returns true if there was keyboard input</returns>
         public static bool KeyboardInput(out string val)
         {
             val = "";
